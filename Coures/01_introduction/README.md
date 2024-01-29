@@ -70,7 +70,7 @@ Ces étapes devraient vous permettre d'installer R sur votre système Ubuntu.
 
 
 
-##  **L'exécution de code R:**
+##  3. **L'exécution de code R:**
 
 L'exécution de code R peut se faire de deux manières principales : via la console R ou le terminal avec la commande `Rscript`. Voici comment utiliser ces deux méthodes :
 
@@ -106,33 +106,3 @@ L'exécution de code R peut se faire de deux manières principales : via la cons
 Choisissez la méthode qui convient le mieux à votre flux de travail. L'utilisation de la console R est idéale pour l'exploration interactive, tandis que l'utilisation de `Rscript` est plus adaptée à l'exécution de scripts complets à partir du terminal ou d'un fichier de commandes.
 
 
-
-## 3. **installer une bibliothèque R :**
-
-Pour installer une bibliothèque R sur Unix en utilisant `sudo R`, suivez ces étapes :
-
-1. Ouvrez un terminal.
-
-2. Tapez la commande suivante pour démarrer R avec des privilèges élevés en utilisant `sudo` :
-   ```bash
-   sudo R
-   ```
-
-   Cela vous demandera de saisir votre mot de passe administrateur.
-
-3. À l'intérieur de la console R, vous pouvez ensuite installer une bibliothèque en utilisant la fonction `install.packages`. Par exemple, pour installer la bibliothèque "jsonlite" :
-   ```R
-   install.packages("jsonlite")
-   ```
-
-   Si vous souhaitez installer une version spécifique, vous pouvez la spécifier en utilisant le paramètre `version` :
-   ```R
-   install.packages("jsonlite", version="1.7.3")
-   ```
-
-4. Une fois l'installation terminée, vous pouvez quitter la console R :
-   ```R
-   q()
-   ```
-
-Remarque : Bien que l'utilisation de `sudo R` soit une manière d'installer des bibliothèques R au niveau du système, il est généralement recommandé d'installer les bibliothèques localement ou dans des bibliothèques spécifiques à l'utilisateur pour éviter des problèmes potentiels de permissions et pour avoir un meilleur contrôle sur les versions des bibliothèques. Considérez l'utilisation de chemins de bibliothèques locaux (Option 2 ou Option 3 de la réponse précédente) pour des installations spécifiques à l'utilisateur. Si vous rencontrez des problèmes de permissions, vous devrez peut-être ajuster les permissions des répertoires de bibliothèques R ou envisager des approches alternatives en fonction de la configuration de votre système.

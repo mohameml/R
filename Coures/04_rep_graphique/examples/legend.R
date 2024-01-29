@@ -120,9 +120,9 @@ plot(x , y, type="o" , pch=16, col="red" , main="les args oam et mar")
 
 
 # la fonction curve 
-curve(x^2, from = -3, to = 3, col = "blue", lwd = 1, main = "Tracé de la fonction quadratique")
-
-
+curve (exp(x) , from = -3 , to = 3 , col="red" , lty=2)
+abline(v=0 , col="blue" , lty=2)
+curve(x^2, from = -3, to = 3, col = "blue",add = TRUE ,  lwd = 1, main = "Tracé de la fonction quadratique")
 
 
 

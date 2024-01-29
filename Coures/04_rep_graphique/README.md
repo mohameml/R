@@ -1,4 +1,4 @@
-# cour : 
+# cour : Représentation graphique en R 
 
 ## 1. **introduction:**
 
@@ -569,7 +569,7 @@ legend("topleft" , title="legend" , c("A" , "B")
 ![image](images/legend_plots.png)
 
 
-## 5. **la fonction ``axis()``:**
+### 4.2 **la fonction ``axis()``:**
 
 >La fonction `axis()` en R est utilisée pour ajouter des axes à un graphique. Elle permet de personnaliser les caractéristiques des axes, y compris les emplacements des étiquettes, les étiquettes elles-mêmes, le style des lignes des axes, etc. 
 
@@ -611,7 +611,45 @@ axis(1, at=x, labels=c("A", "B", "C", "D", "E"), col="red", lty=2)
 ![image](images/axis.png)
 
 
-## 6. **la fonction ``lines()``:**
+### 4.3. **la fonction ``title``:**
+
+>La fonction `title()` en R est utilisée pour ajouter ou personnaliser les titres des axes et du graphique dans un graphique. Elle permet de spécifier les titres pour l'axe des x, l'axe des y, le titre principal et, si nécessaire, le sous-titre.
+
+- Voici la syntaxe générale de la fonction `title()` :
+
+```R
+title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, line = NA, outer = FALSE, col.main = NULL, col.sub = NULL, col.lab = NULL, col.axis = NULL, ...)
+```
+
+- **`main` :** Le titre principal du graphique.
+
+- **`sub` :** Le sous-titre (situé sous le titre principal).
+
+- **`xlab` :** Le titre de l'axe des x.
+
+- **`ylab` :** Le titre de l'axe des y.
+
+- **`col.main`, `col.sub`, `col.lab`, `col.axis` :** Les couleurs pour le texte du titre principal, du sous-titre, des titres d'axes x et y.
+
+
+
+- **Exemple d'utilisation de la fonction `title()` :**
+
+```R
+# Exemple : Utilisation de la fonction title
+x <- 1:5
+y <- c(2, 4, 1, 3, 5)
+
+# Tracé d'un graphique avec des titres personnalisés
+plot(x, y, type="b", col="blue", pch=16)
+
+# Ajout de titres avec la fonction title
+title(main = "la fonction titile", sub = "Sous-titre", xlab = "Axe X", ylab = "Axe Y", col.main = "red", col.sub = "green", col.lab = "purple", col.axis = "orange")
+```
+![image](images/title.png)
+
+
+## 5. **la fonction ``lines()``:**
 
 >La fonction `lines()` en R est utilisée pour ajouter des lignes supplémentaires à un graphique existant. Cette fonction est souvent utilisée après la création initiale d'un graphique à l'aide de la fonction `plot()` ou d'autres fonctions de tracé.
 
@@ -640,7 +678,7 @@ plot(x, y, type="b", col="blue", pch=16, main="Exemple de Graphique avec lines")
 lines(x, y, col="red", lty=2)
 ```
 
-## 7. **la fonction ``abline()``:**
+## 6. **la fonction ``abline()``:**
 
 >La fonction `abline()` en R est utilisée pour ajouter une ligne à un graphique, généralement de type `plot()`, `scatterplot()`, ou autre type de graphique bidimensionnel. La ligne peut être ajoutée avec une pente et une ordonnée à l'origine spécifiées ou avec une équation linéaire existante.
  
@@ -683,46 +721,11 @@ abline(a = 0, b = 1, col = "purple", lty = 1)
 ![image](images/abline.png)
 
 
-## 8. **la fonction ``title``:**
-
->La fonction `title()` en R est utilisée pour ajouter ou personnaliser les titres des axes et du graphique dans un graphique. Elle permet de spécifier les titres pour l'axe des x, l'axe des y, le titre principal et, si nécessaire, le sous-titre.
-
-- Voici la syntaxe générale de la fonction `title()` :
-
-```R
-title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, line = NA, outer = FALSE, col.main = NULL, col.sub = NULL, col.lab = NULL, col.axis = NULL, ...)
-```
-
-- **`main` :** Le titre principal du graphique.
-
-- **`sub` :** Le sous-titre (situé sous le titre principal).
-
-- **`xlab` :** Le titre de l'axe des x.
-
-- **`ylab` :** Le titre de l'axe des y.
-
-- **`col.main`, `col.sub`, `col.lab`, `col.axis` :** Les couleurs pour le texte du titre principal, du sous-titre, des titres d'axes x et y.
 
 
+## 7. **la fonction ``par``:**
 
-- **Exemple d'utilisation de la fonction `title()` :**
-
-```R
-# Exemple : Utilisation de la fonction title
-x <- 1:5
-y <- c(2, 4, 1, 3, 5)
-
-# Tracé d'un graphique avec des titres personnalisés
-plot(x, y, type="b", col="blue", pch=16)
-
-# Ajout de titres avec la fonction title
-title(main = "la fonction titile", sub = "Sous-titre", xlab = "Axe X", ylab = "Axe Y", col.main = "red", col.sub = "green", col.lab = "purple", col.axis = "orange")
-```
-![image](images/title.png)
-
-## 9. **la fonction ``par``:**
-
-### 9.1 **introduction:**
+### 7.1 **introduction:**
 
 >La fonction `par()` en R est utilisée pour spécifier et récupérer les paramètres graphiques globaux dans un environnement graphique. Ces paramètres déterminent l'apparence visuelle des graphiques créés avec les fonctions graphiques de base de R, telles que `plot()`, `barplot()`, `hist()`, etc.
 
@@ -734,7 +737,7 @@ par(...)
 
 L'argument `...` représente une série d'autres paramètres graphiques qui peuvent être spécifiés. 
 
-### 9.2 **les arguments de la fonction ``par``:**
+### 7.2 **les arguments de la fonction ``par``:**
 
 1. **`mfrow` et `mfcol` :**
    
@@ -828,7 +831,7 @@ Dans cet exemple, `par(mfrow=c(2, 2))` crée une disposition en 2x2, tandis que 
 
 
 
-### 9.3 **Exemple:**
+### 7.3 **Exemple:**
 
 Voici un exemple d'utilisation de la fonction `par()` pour ajuster certains paramètres graphiques globaux :
 
@@ -854,7 +857,7 @@ Dans cet exemple, nous utilisons `par()` pour définir plusieurs paramètres gra
 ![image](images/par.png)
 
 
-## 10 . **la fonction ``curve``:**
+## 8. **la fonction ``curve``:**
 
 >La fonction `curve()` en R est utilisée pour tracer des courbes mathématiques sur un graphique. Elle est particulièrement utile lorsque vous souhaitez visualiser des fonctions mathématiques sous forme de courbes dans un graphique.
 
