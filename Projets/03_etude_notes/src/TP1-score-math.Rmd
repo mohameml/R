@@ -1,0 +1,226 @@
+---
+title: "TP1"
+author: "Mohamed_Ahmed_Mohamed_Lemine && chrif_m'hamed_mohamedou"
+output: 
+  html_document:
+    number_sections: false
+    toc_float: true
+---
+
+ chrif m'hamed
+prénom: mohamedou
+
+<!-- see help at https://bookdown.org/yihui/rmarkdown-cookbook/latex-output.html -->
+
+```{r setup, include=FALSE, message=FALSE}
+#see full list >knitr::opts_chunk$get()
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", prompt = TRUE, comment="")
+```
+
+Lecture
+```{r}
+PISA2018 <- read.csv("PISA2018subset.csv", stringsAsFactors = TRUE)
+FR2018 <- subset(PISA2018, country == "FRA")
+head(FR2018)
+```
+
+
+
+## Question 1
+
+
+
+```{r}
+summary(FR2018)
+
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr")
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+
+pairs(FR2018[,c("read", "math", "science", "escs")], diag.panel = panel.hist, upper.panel = panel.cor)
+```
+
+
+
+## Question 2
+
+Utiliser `cor`, `lm(math~read, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+
+# coefficient de corrélation entre math et read 
+cor(FR2018$math , FR2018$read)
+
+```
+
+### Interprétation des résultats de  ``cor`` : 
+
+On voit bien que le coefficient de corrélation entre les notes de mathématiques (math) et de lecture (read) est égal à 0,84. Cela justifie bien que les notes de mathématiques et de lecture sont fortement corrélées, signifiant que l'une influence l'autre.
+
+
+
+```{r}
+# modéle de régression entre math et read : 
+
+FRmathread <- lm(math~read , data=FR2018) # on définit l'objet de régression
+
+summary(FRmathread)  # la fonction summary pour avoir les détailles sur le modléle
+
+```
+
+
+### Interprétation des résultats de   `summary(lm())` : 
+
+- La colonne ``Estimate`` donne les  coefficients estimés pour chaque variable du modèle donc ona   (β₀ , β₁)= (103.96168,0.79664).
+
+
+-   La colonne ``Pr(>|t|)`` donne les p-valeurs de tests de nullité du coefficient. Dans l’exemple, ces p-valeurs sont très faibles, donc les hypothèses ``β0 = 0`` et ``β1 = 0`` sont largement rejetées. 
+
+
+
+- D'apres la ligne  ``Multiple R-Squared`` qui nous donne la valeur de  $R^2$ , ce qui permet de faire le test de pertinence de la régression . 
+
+- La ``F-statistic`` est la statistique de test de pertinence de la régression, On retrouve qu’elle vaut 113.4 . La ``p-value`` fournie est la p-valeur de ce test. Elle est très faible
+ $2.11^{-14}$ donc on conclut bien que la régression linéaire est pertinente .
+
+
+```{r}
+# affichage de graphe de régression 
+
+plot(math~read, data=FR2018 , 
+     main="math~read" , xlab="read" , ylab="math", 
+     pch=16  
+     ) # pour l'affiche des nugaes des points math , read
+
+
+abline(FRmathread , col="red") # pour tracer la droite de régression 
+
+legend("topleft" , "régression linéiare entre math~read") # pour la legend 
+
+
+
+```
+
+
+
+
+
+
+
+## Question 3
+
+
+Utiliser `cor`, `lm(science~read, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+
+```{r}
+cor(FR2018$science , FR2018$read)
+FRscienceread <- lm(science~read , data=FR2018)
+class(FRscienceread)
+FRscienceread
+
+summary(FRscienceread)
+
+coef(summary(FRscienceread))
+
+plot(science~read, data=FR2018)
+abline(FRscienceread , col="red")
+
+
+print(FRscienceread$r.squared)
+
+```
+
+
+$R^2=$ 
+`r round(summary(FRmathread)$r.squared , 2)`
+
+
+## Question 4
+
+
+
+
+## Question 5
+
+Utiliser `cor`, `lm(math~escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+FRmathec <- lm(math~escs , data=FR2018)
+summary(FRmathec)
+plot(math~escs , data=FR2018)
+abline(FRmathec , col="red")
+
+
+```
+
+## Question 6
+
+Utiliser `cor`, `lm(read~escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+
+```
+
+## Question 7
+
+Utiliser `cor`, `lm(math~read+escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+FRmathereadescs <- lm(math~read+escs , data=FR2018)
+
+summary(FRmathereadescs)
+
+plot(math~read , data=FR2018)
+abline(coef(FRmathereadescs)[1:2] , col="red")
+
+plot(FR2018$read + FR2018$escs , FR2018$math)
+points(FR2018$read + FR2018$escs , fitted.values(FRmathereadescs) , col="darkgreen" , pch="+")
+
+```
+
+## Question 8
+
+
+Utiliser `boxplot(math ~ gender, data = FR2018)`, `shapiro.test`, `t.test`
+
+```{r}
+x.fille <- FR2018$math[FR2018$gender == "female"]
+x.garcon <- FR2018$math[FR2018$gender == "male"]
+```
+
+
+## Question 9
+
+
+Utiliser `boxplot(science ~ gender, data = FR2018)`, `shapiro.test`, `t.test`
+
+```{r}
+boxplot(science ~ gender, data = FR2018)
+
+```
+
+## Question 10
+
+Changer `FR2018` en `PISA2018`.
+```{r}
+
+```
+
+
+
