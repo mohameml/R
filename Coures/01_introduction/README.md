@@ -2,7 +2,7 @@
 
 ## 1. **Introduction:**
 
-- ***Introduction au langage R :**
+- **Introduction au langage R :**
 
 >R est un langage de programmation et un environnement de développement dédié principalement à la **statistique** et à **l'analyse de données**. Il a été créé par Ross Ihaka et Robert Gentleman à l'Université d'Auckland, Nouvelle-Zélande. R est open-source et largement utilisé dans les domaines académiques, de la recherche et de l'industrie.
 
@@ -15,7 +15,7 @@
 
 R est généralement considéré comme un langage interprété. Cela signifie que le code R est écrit et exécuté ligne par ligne ou par blocs, sans nécessiter une étape de compilation explicite avant l'exécution. L'interpréteur R évalue directement les instructions R et renvoie les résultats.
 
-Cependant, il est important de noter que R utilise également une forme de compilation just-in-time (JIT). Lorsqu'une fonction R est appelée pour la première fois, elle peut être compilée en code machine pour une exécution plus rapide. Ce mécanisme permet d'optimiser les performances des fonctions fréquemment utilisées sans nécessiter une compilation préalable de tout le programme.
+
 
 
 - **Introduction à RStudio :**
@@ -52,7 +52,7 @@ Pour installer R sur Ubuntu, vous pouvez suivre ces étapes simples en utilisant
    sudo apt-get install r-base-dev
    ```
 
-3. **Vérifier l'installation (optionnel) :**
+3. **Vérifier l'installation :**
    Vous pouvez vérifier si R a été installé correctement en ouvrant le terminal et en tapant `R`. Cela devrait vous amener à l'invite R.
 
 4. **Installer RStudio :**
@@ -104,5 +104,75 @@ L'exécution de code R peut se faire de deux manières principales : via la cons
   - Appuyez sur "Entrée" pour exécuter le script R.
 
 Choisissez la méthode qui convient le mieux à votre flux de travail. L'utilisation de la console R est idéale pour l'exploration interactive, tandis que l'utilisation de `Rscript` est plus adaptée à l'exécution de scripts complets à partir du terminal ou d'un fichier de commandes.
+
+
+## 4. **``Working directory`` en R:**
+
+La notion de ``working directory`` (répertoire de travail) en R fait référence au dossier sur votre système de fichiers où R cherche par défaut pour lire et écrire des fichiers, à moins que des chemins de fichiers absolus ou relatifs ne soient spécifiés. Voici quelques éléments importants à connaître :
+
+### 4.1.Fonctions clés :
+
+1. **`getwd()` (get working directory)** : Cette fonction renvoie le chemin du répertoire de travail actuel.
+   ```R
+   getwd()
+   ```
+
+2. **`setwd()` (set working directory)** : Cette fonction est utilisée pour changer le répertoire de travail. Vous devez fournir le chemin absolu ou relatif du nouveau répertoire.
+   ```R
+   setwd("/chemin/vers/le/nouveau/repertoire")
+   ```
+
+### 4.2 Changer le répertoire de travail dans RStudio :
+
+Dans RStudio, vous pouvez également changer le répertoire de travail via l'interface utilisateur. Vous pouvez accéder à cette fonctionnalité à partir des menus **Session** ou **Tools**.
+
+1. **Via Session :**
+   - Allez dans le menu "Session".
+   - Sélectionnez "Set Working Directory" > "Choose Directory...".
+   - Choisissez le nouveau répertoire de travail dans la boîte de dialogue.
+
+2. **Via Tools :**
+   - Allez dans le menu "Tools".
+   - Sélectionnez "Global Options...".
+   - Dans l'onglet "General", vous pouvez spécifier le répertoire de travail par défaut sous "Default working directory".
+
+Lorsque vous changez le répertoire de travail dans RStudio via l'une de ces méthodes, cela n'affecte que la session RStudio actuelle. Si vous souhaitez que le changement soit permanent pour toutes les sessions RStudio, vous devrez peut-être ajuster les options lors du démarrage de RStudio ou modifier votre script de démarrage R (le fichier ".Rprofile").
+
+
+## 5.**help:**
+
+En R, il existe plusieurs façons d'obtenir de l'aide sur une fonction, un package ou un concept. Voici les principales méthodes :
+
+### 5.1. Fonction `help()` :
+
+La fonction `help()` peut être utilisée pour obtenir des informations sur un sujet spécifique, une fonction ou un package. Vous pouvez fournir le nom de la fonction ou du package comme argument.
+```R
+help(lm)  # Aide pour la fonction lm (régression linéaire)
+help(ggplot2)  # Aide pour le package ggplot2
+```
+
+### 5.2. Utilisation du `?` :
+
+Le point d'interrogation `?` est un raccourci pour la fonction `help()`. Vous pouvez l'utiliser directement suivi du nom de la fonction ou du package.
+```R
+?lm  # Aide pour la fonction lm
+?ggplot2  # Aide pour le package ggplot2
+```
+
+### 5.3. Utilisation du `??` (double point d'interrogation) :
+
+Le double point d'interrogation `??` est utilisé pour rechercher un terme dans toutes les documentations chargées. Cela inclut les fonctions, les packages, les concepts, etc.
+```R
+??regression  # Recherche du terme "regression" dans les documentations
+```
+
+### 5.4. Fonction `help.search()` :
+
+La fonction `help.search()` effectue une recherche plus générale dans les documentations de R. Elle prend un terme comme argument et renvoie des résultats pertinents.
+```R
+help.search("regression")  # Recherche d'aide pour le terme "regression"
+```
+
+En résumé, pour obtenir de l'aide en R, vous pouvez utiliser la fonction `help()` avec le nom de la fonction ou du package, le point d'interrogation `?`, le double point d'interrogation `??` pour une recherche globale, et la fonction `help.search()` pour une recherche plus générale. Ces outils sont utiles pour comprendre comment utiliser des fonctions, découvrir des packages et trouver des informations sur des concepts spécifiques.
 
 
