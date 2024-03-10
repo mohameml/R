@@ -1,0 +1,302 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\hypertarget{correction-du-exo}{%
+\section{Correction du Exo :}\label{correction-du-exo}}
+
+\hypertarget{chargement-du-data}{%
+\subsubsection{1. chargement du data :}\label{chargement-du-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# data :}
+
+\NormalTok{variete}\OtherTok{\textless{}{-}}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+
+\NormalTok{vitamine}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{93.6}\NormalTok{,}\FloatTok{95.3}\NormalTok{,}\DecValTok{96}\NormalTok{,}\FloatTok{93.7}\NormalTok{,}\FloatTok{96.2}\NormalTok{,}\FloatTok{95.3}\NormalTok{,}\FloatTok{96.9}\NormalTok{,}\FloatTok{95.8}\NormalTok{,}\FloatTok{97.3}\NormalTok{,}\FloatTok{97.7}\NormalTok{,}\FloatTok{94.5}\NormalTok{,}\DecValTok{97}\NormalTok{,}\FloatTok{97.8}\NormalTok{,}\DecValTok{97}\NormalTok{,}
+            \FloatTok{98.3}\NormalTok{,}\FloatTok{98.8}\NormalTok{,}\FloatTok{98.2}\NormalTok{,}\FloatTok{97.8}\NormalTok{,}\FloatTok{97.2}\NormalTok{,}\FloatTok{97.9}\NormalTok{,}\FloatTok{94.6}\NormalTok{,}\FloatTok{97.8}\NormalTok{,}\DecValTok{98}\NormalTok{,}\DecValTok{95}\NormalTok{,}\FloatTok{98.9}\NormalTok{,}\FloatTok{93.2}\NormalTok{,}\FloatTok{94.4}\NormalTok{,}\FloatTok{93.8}\NormalTok{,}\FloatTok{95.6}\NormalTok{,}\FloatTok{94.8}\NormalTok{)}
+
+\NormalTok{variete }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(variete)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(variete , vitamine)}
+\FunctionTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   variete vitamine
+## 1       1     93.6
+## 2       1     95.3
+## 3       1     96.0
+## 4       1     93.7
+## 5       1     96.2
+## 6       2     95.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{View}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{modele-anova-1-facteur-uxe0-effets-fixes}{%
+\subsubsection{2. Modele ANOVA 1 facteur à effets fixes
+:}\label{modele-anova-1-facteur-uxe0-effets-fixes}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# modele :}
+
+\NormalTok{modele }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(vitamine }\SpecialCharTok{\textasciitilde{}}\NormalTok{ variete , }\AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summary}\NormalTok{(modele)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq F value  Pr(>F)   
+## variete      5  45.84   9.167   5.713 0.00131 **
+## Residuals   24  38.51   1.605                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{verification-de-hypothuxe9se-de-modele}{%
+\subsubsection{3. verification de hypothése de
+modele}\label{verification-de-hypothuxe9se-de-modele}}
+
+\hypertarget{hypthuxe9s-de-normalituxe9}{%
+\paragraph{hypthés de normalité :}\label{hypthuxe9s-de-normalituxe9}}
+
+\begin{itemize}
+\tightlist
+\item
+  avce QQ-plot :
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# ==== qq{-}plot}
+
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{resid}\NormalTok{(modele))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{resid}\NormalTok{(modele))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{solution_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  avce histogramme :
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{resid}\NormalTok{(modele))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{solution_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Avce test de shapiro :
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{resid}\NormalTok{(modele))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  resid(modele)
+## W = 0.9563, p-value = 0.2485
+\end{verbatim}
+
+on a un p-value = 24\% \textgreater{} 5\% donc on conserve l'hypothsée
+de normalité de errures \(\epsilon_{i,j}\)
+
+\hypertarget{verification-de-homoguxe9nite-des-varinace-de-ruxe9sidus-avce-le-test-de-bartlett}{%
+\paragraph{verification de homogénite des varinace de résidus avce le
+test de Bartlett
+:}\label{verification-de-homoguxe9nite-des-varinace-de-ruxe9sidus-avce-le-test-de-bartlett}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bartlett.test}\NormalTok{(}\FunctionTok{resid}\NormalTok{(modele)}\SpecialCharTok{\textasciitilde{}}\NormalTok{variete , }\AttributeTok{data =}\NormalTok{ df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  resid(modele) by variete
+## Bartlett's K-squared = 5.6023, df = 5, p-value = 0.3469
+\end{verbatim}
+
+on a p-value = 34\% \textgreater{} 5\% donc on garde l'hypothése
+d'homogénite des variances des residus
+
+\hypertarget{resulats-du-moduxe9le}{%
+\subsubsection{4. Resulats du Modéle :}\label{resulats-du-moduxe9le}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# modele :}
+\NormalTok{modele}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+##    aov(formula = vitamine ~ variete, data = df)
+## 
+## Terms:
+##                 variete Residuals
+## Sum of Squares   45.836    38.512
+## Deg. of Freedom       5        24
+## 
+## Residual standard error: 1.266754
+## Estimated effects may be unbalanced
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# la fonction summary :}
+\FunctionTok{summary}\NormalTok{(modele)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq F value  Pr(>F)   
+## variete      5  45.84   9.167   5.713 0.00131 **
+## Residuals   24  38.51   1.605                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{itemize}
+\item
+  on a un p-value \textless{} 5\% donc on peut réjetre l'hypothsé H0
+  donc la variéte de pomme à un effet sur la teneur de vutamine C en
+  pommme
+\item
+  on a que la carée moyenne de residue \(CM_r\) = 1.605 est une
+  estimation de \(\sigma^2\)
+\end{itemize}
+
+\end{document}

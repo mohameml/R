@@ -1,0 +1,109 @@
+---
+output:
+  html_document: default
+---
+# Correction du Exo : 
+
+### 1. chargement du data : 
+
+
+```{r}
+# data :
+
+variete<-rep(1:6,c(5,5,5,5,5,5))
+
+vitamine<-c(93.6,95.3,96,93.7,96.2,95.3,96.9,95.8,97.3,97.7,94.5,97,97.8,97,
+            98.3,98.8,98.2,97.8,97.2,97.9,94.6,97.8,98,95,98.9,93.2,94.4,93.8,95.6,94.8)
+
+variete <- factor(variete)
+
+df <- data.frame(variete , vitamine)
+head(df)
+View(df)
+```
+
+### 2. Modele ANOVA 1 facteur à effets fixes : 
+
+```{r}
+
+# modele :
+
+modele <- aov(vitamine ~ variete , data = df)
+summary(modele)
+
+
+```
+
+### 3. verification de hypothése de modele 
+
+#### hypthés de normalité : 
+
+- avce QQ-plot :
+
+
+```{r}
+
+### ==== qq-plot
+
+qqnorm(resid(modele))
+qqline(resid(modele))
+
+```
+
+
+
+- avce histogramme : 
+
+
+```{r}
+
+hist(resid(modele))
+```
+
+
+- Avce test de shapiro :
+
+```{r}
+
+shapiro.test(resid(modele))
+
+```
+on a un p-value = 24% > 5% donc on conserve l'hypothsée de normalité de errures $\epsilon_{i,j}$
+
+
+####   verification de homogénite des varinace de résidus avce le test de Bartlett :
+
+
+```{r}
+
+bartlett.test(resid(modele)~variete , data = df)
+
+
+```
+
+
+on a p-value = 34% > 5% donc on garde l'hypothése d'homogénite des variances des residus 
+
+
+
+
+### 4. Resulats du Modéle :
+
+```{r}
+
+# modele :
+modele
+
+# la fonction summary :
+summary(modele)
+```
+
+- on a un p-value < 5% donc on peut réjetre l'hypothsé H0  donc la variéte de pomme à un effet sur la teneur de vutamine C en pommme  
+
+
+- on a que la carée moyenne de residue $CM_r$ = 1.605 est une estimation de $\sigma^2$
+
+
+
+
+

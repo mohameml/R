@@ -2,7 +2,7 @@
 
 
 ## 1. **Intrduction:**
-
+   
 - **Définition:**
 
 >La régression est une technique statistique fondamentale utilisée dans l'analyse de données pour comprendre et modéliser la relation entre une variable dépendante et une ou plusieurs variables indépendantes. Elle appartient à la famille des méthodes d'apprentissage supervisé, où l'objectif est de prédire ou expliquer une variable continue à partir d'autres variables explicatives.

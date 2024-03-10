@@ -1,40 +1,69 @@
 # cour 09 : **read data**
 
 
-## 1. **CSV**
+>L'objectif de ce cours est de connaître les méthodes pour importer des données à partir de fichiers CSV, Excel, SQL, etc., et aussi comment sauvegarder un data.frame dans ces fichiers.
+
+
+## 1. **les fichiers ``CSV``:**
+
+- **Description:**
+
+  - >Les fichiers CSV (Comma-Separated Values) sont des fichiers texte simples utilisés pour stocker des données tabulaires. Dans un fichier CSV, les données sont organisées en lignes, où chaque ligne correspond à une entrée distincte, et les valeurs de chaque entrée sont séparées par des virgules (ou un autre délimiteur, comme un point-virgule ou une tabulation).
+
+  
+  - **Par exemple, un fichier CSV peut ressembler à ceci :**
+
+    ```plaintext
+    Nom,Âge,Ville
+    Alice,25,Paris
+    Bob,30,Londres
+    Charlie,22,Berlin
+    ```
+
+    Dans cet exemple, chaque ligne représente une personne avec des informations sur son nom, son âge et sa ville, et les valeurs correspondantes sont séparées par des virgules. 
+  
+  - Les fichiers CSV sont largement utilisés car ils sont simples à créer, à lire et à interpréter, et ils sont compatibles avec de nombreux logiciels et outils d'analyse de données.
+
+
+
 
 - **La fonction `read.csv()` :**
 
-La fonction `read.csv()` en R est utilisée pour lire des fichiers CSV (Comma-Separated Values) dans R. Les fichiers CSV sont des fichiers texte où les valeurs sont séparées par des virgules (ou d'autres délimiteurs spécifiés). La syntaxe de base de la fonction `read.csv()` est la suivante :
+  - **Description:**
 
-```R
-read.csv(file, header = TRUE, sep = ",", quote = "\"", dec = ".", ...)
-```
+    >La fonction `read.csv()` en R est utilisée pour lire des fichiers CSV  dans R. Les fichiers CSV sont des fichiers texte où les valeurs sont séparées par des virgules (ou d'autres délimiteurs spécifiés). 
+    
+  - **La syntaxe de base de la fonction `read.csv()` est la suivante :**
 
-- `file`: Le chemin vers le fichier CSV que vous souhaitez lire.
-- `header`: Un argument logique indiquant si la première ligne du fichier contient les noms de colonnes (par défaut, `TRUE`).
-- `sep`: Le caractère de séparation entre les valeurs (par défaut, la virgule `,`).
-- `quote`: Le caractère utilisé pour encadrer les champs de texte (par défaut, la double quote `"`)
-- `dec`: Le caractère utilisé pour spécifier le séparateur décimal (par défaut, le point `.`).
+      ```R
+      read.csv(file, header = TRUE, sep = ",", quote = "\"", dec = ".", ...)
+      ```
 
-Voici un exemple d'utilisation de `read.csv()` avec un fichier CSV :
+      - `file`: Le chemin vers le fichier CSV que vous souhaitez lire.
+      - `header`: Un argument logique indiquant si la première ligne du fichier contient les noms de colonnes (par défaut, `TRUE`).
+      - `sep`: Le caractère de séparation entre les valeurs (par défaut, la virgule `,`).
+      - `quote`: Le caractère utilisé pour encadrer les champs de texte (par défaut, la double quote `"`)
+      - `dec`: Le caractère utilisé pour spécifier le séparateur décimal (par défaut, le point `.`).
 
-```R
-# Charger un fichier CSV
-donnees <- read.csv("chemin/vers/le/fichier.csv")
 
-# Afficher la structure des données
-str(donnees)
+  - **Voici un exemple d'utilisation de `read.csv()` avec un fichier CSV :**
 
-# Afficher les premières lignes des données
-head(donnees)
-```
+      ```R
+      # Charger un fichier CSV
+      donnees <- read.csv("chemin/vers/le/fichier.csv")
 
-Dans cet exemple, `donnees` sera un objet de type data frame contenant les données du fichier CSV. Vous pouvez ajuster les paramètres de la fonction `read.csv()` en fonction des caractéristiques de votre fichier CSV.
+      # Afficher la structure des données
+      str(donnees)
 
-Si vous utilisez RStudio, vous pouvez également utiliser l'interface graphique pour importer des fichiers CSV. Allez dans le menu "Session" -> "Import Data" -> "From Text (base)...", puis sélectionnez votre fichier CSV.
+      # Afficher les premières lignes des données
+      head(donnees)
+      ```
 
-N'oubliez pas de spécifier le chemin correct vers votre fichier CSV dans la fonction `read.csv()`.
+      Dans cet exemple, `donnees` sera un objet de type ``data.frame`` contenant les données du fichier CSV. Vous pouvez ajuster les paramètres de la fonction `read.csv()` en fonction des caractéristiques de votre fichier CSV.
+
+
+  - en RStudio, vous pouvez également utiliser l'interface graphique pour importer des fichiers CSV. Allez dans le menu "Session" -> "Import Data" -> "From Text (base)...", puis sélectionnez votre fichier CSV.
+
 
 
 

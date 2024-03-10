@@ -106,3 +106,19 @@ vecteur_ordonne <- vecteur[indices_ordre]
 
 
 
+
+
+
+
+l <- list(
+  name = c("sidi" , "khaled") ,
+  age = c(12, 15)
+)
+
+
+print(l)
+
+print(l[names(l)=="age"])
+print(l$age)
+
+

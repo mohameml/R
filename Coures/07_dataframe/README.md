@@ -598,3 +598,58 @@ Voici quelques exemples d'utilisation de la fonction `subset()` :
 ### RQ : 
 
 - Cependant, il est important de noter que remplacer les valeurs manquantes par 0 peut avoir un impact significatif sur vos résultats, en particulier si les zéros ne sont pas des valeurs appropriées dans le contexte de vos données. Remplacer par la moyenne peut être moins susceptible de biaiser vos résultats, mais cela dépend également de la distribution de vos données.
+
+
+## 5. **``Merging Data Frames:``**
+
+>La fusion de dataframes en R, souvent appelée "merging", est le processus d'association de deux dataframes en fonction de certaines variables communes. Cela permet de combiner des informations provenant de différentes sources ou de différentes parties d'un ensemble de données.
+
+
+- **la fonction ``merge()``:**
+
+    - **Description :**
+        La fonction `merge()` en R est utilisée pour fusionner deux dataframes en fonction des valeurs de colonnes spécifiées, créant ainsi un nouveau dataframe combiné. La fusion se fait généralement en utilisant des colonnes communes entre les deux dataframes. Cette fonction offre la possibilité de réaliser différents types de fusions, notamment les fusions internes (inner join), gauches (left join), droites (right join) et complètes (full join).
+ 
+
+    - **Syntaxe :**
+        La syntaxe de base de la fonction `merge()` est la suivante :
+
+        ```R
+        merge(x, y, by = NULL, by.x = NULL, by.y = NULL, all = FALSE, all.x = all, all.y = all, ...)
+        ```
+
+        - `x` : Le premier dataframe à fusionner.
+        - `y` : Le deuxième dataframe à fusionner.
+        - `by` : Un vecteur de noms de colonnes ou d'indices spécifiant les colonnes sur lesquelles effectuer la fusion. Si `by` est `NULL`, la fusion se fait sur toutes les colonnes ayant le même nom dans les deux dataframes.
+        
+        - `by.x` : Un vecteur de noms de colonnes ou d'indices spécifiant les colonnes à utiliser pour la fusion dans le dataframe `x`. Si `by.x` est spécifié et `by` est `NULL`, la fusion est effectuée sur les colonnes spécifiées dans `by.x`.
+
+        - `by.y` : Un vecteur de noms de colonnes ou d'indices spécifiant les colonnes à utiliser pour la fusion dans le dataframe `y`. Si `by.y` est spécifié et `by` est `NULL`, la fusion est effectuée sur les colonnes spécifiées dans `by.y`.
+
+        - `all` : Une valeur logique indiquant si la fusion doit inclure toutes les lignes (TRUE) ou seulement les lignes avec des correspondances (FALSE). Par défaut, `all` est `FALSE`.
+
+        - `all.x` : Une valeur logique indiquant si toutes les lignes du dataframe `x` doivent être incluses dans le résultat, même si elles n'ont pas de correspondance dans `y`. Par défaut, `all.x` est égal à la valeur de `all`.
+
+        - `all.y` : Une valeur logique indiquant si toutes les lignes du dataframe `y` doivent être incluses dans le résultat, même si elles n'ont pas de correspondance dans `x`. Par défaut, `all.y` est égal à la valeur de `all`.
+
+        - `...` : D'autres paramètres optionnels.
+
+
+
+    - **Exemple :**
+        
+        Considérons deux dataframes, `df1` et `df2`, que nous voulons fusionner sur la colonne "ID". Voici un exemple :
+
+        ```R
+        # Création de deux dataframes
+        df1 <- data.frame(ID = c(1, 2, 3), Name = c("Alice", "Bob", "Charlie"))
+        df2 <- data.frame(ID = c(2, 3, 4), Score = c(95, 88, 75))
+
+        # Fusion des dataframes par la colonne "ID" (left join)
+        merged_df <- merge(df1, df2, by = "ID", all.x = TRUE)
+
+        # Affichage du dataframe fusionné
+        print(merged_df)
+        ```
+
+        Dans cet exemple, `merge()` fusionne les dataframes `df1` et `df2` sur la colonne "ID" en utilisant un left join (`all.x = TRUE`). Cela signifie que toutes les lignes de `df1` seront incluses dans le résultat, même si elles n'ont pas de correspondance dans `df2`. Le résultat sera un nouveau dataframe (`merged_df`) combinant les informations des deux dataframes sur la colonne "ID".

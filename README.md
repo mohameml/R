@@ -6,8 +6,8 @@
     - 03_type_donnees : done 
     - 04_vecteur : done 
     - 05_matrice : done
-    - 06_factor
-    - 07_dataframe
+    - 06_factor : done
+    - 07_dataframe : done 
     - 08_lists
     - 09_read_data
     - 10_conditions
@@ -23,5 +23,13 @@
     - 20_stat_descriptive_R
     - 21_test_stat
     - 22_Rmarkdown
-    - 23_regression_linéaire
+    - 23_regression_linéaire : 
+        - 01_simple : presque done 
+        -02_multiple : 
+
+    - 24_anova : 
+        - 01_anova_one_way : done
+        - 02_anova_two_way :
+ 
+    - 25_split_validation 
 
