@@ -98,19 +98,19 @@
 
     >En R, si vous voulez nommer spécifiquement un élément d'une liste en utilisant son indice, vous pouvez le faire en accédant à l'indice directement et en utilisant la fonction `names()` pour attribuer un nom. Voici un exemple :
 
-        ```R
-        # Créer une liste
-        ma_liste <- list(1, 2, 3)
+    ```R
+    # Créer une liste
+    ma_liste <- list(1, 2, 3)
 
-        # Afficher la liste avant de nommer
-        print(ma_liste)
+    # Afficher la liste avant de nommer
+    print(ma_liste)
 
-        # Nommer un élément par son indice
-        names(ma_liste)[2] <- "deuxième"
+    # Nommer un élément par son indice
+    names(ma_liste)[2] <- "deuxième"
 
-        # Afficher la liste après avoir nommé par indice
-        print(ma_liste)
-        ```
+    # Afficher la liste après avoir nommé par indice
+    print(ma_liste)
+    ```
 
 
 ### RQ 1: **Affichage d'une liste nommée:**
@@ -192,4 +192,38 @@ $age
 
 
 
+## 4. **la fonction ``lapply``:**
 
+- **Description:**
+
+    >La fonction `lapply` en R est une fonction de base très utile qui permet d'appliquer une fonction spécifiée à chaque élément d'une liste ou d'un vecteur, puis de retourner une liste contenant les résultats. 
+
+- **La syntaxe de base de la fonction `lapply` est la suivante :**
+
+    ```R
+    lapply(X, FUN, ...)
+    ```
+
+
+
+    - `X` est la liste ou le vecteur sur lequel vous souhaitez appliquer la fonction.
+    - `FUN` est la fonction que vous souhaitez appliquer à chaque élément de la liste ou du vecteur.
+
+    >La fonction `lapply` parcourt chaque élément de la liste ou du vecteur `X`, applique la fonction `FUN` à chaque élément, et retourne une liste contenant les résultats.
+
+
+- **Voici un exemple simple pour illustrer son utilisation :**
+
+    Supposons que nous avons une liste de vecteurs :
+
+    ```R
+    my_list <- list(a = c(1, 2, 3), b = c(4, 5, 6), c = c(7, 8, 9))
+    ```
+
+    Nous voulons calculer la somme de chaque élément de chaque vecteur. Pour cela, nous pouvons utiliser `lapply` avec la fonction `sum` :
+
+    ```R
+    result <- lapply(my_list, sum)
+    ```
+
+    Maintenant, `result` contient une liste où chaque élément est la somme des éléments correspondants de chaque vecteur de `my_list`.

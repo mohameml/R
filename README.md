@@ -8,8 +8,8 @@
     - 05_matrice : done
     - 06_factor : done
     - 07_dataframe : done 
-    - 08_lists
-    - 09_read_data
+    - 08_lists : done 
+    - 09_read_data : csv , excel , 
     - 10_conditions
     - 11_boucles
     - 12_fonctions
