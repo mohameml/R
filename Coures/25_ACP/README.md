@@ -47,7 +47,6 @@ $$
 
 - **Calcul de la moyenne** :
     La moyenne $\bar{x}_j$ des données de la colonne $j$ est calculée comme suit :
-
 $$
 \bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{i,j}
 $$
