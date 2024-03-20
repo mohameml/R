@@ -11,18 +11,19 @@
 
     - On a un tableau de données représenté par une matrice $X$  qui contient $p$ colonnes ( $x^j$ ) représentant les variables et $n$ lignes (  $x_i$  ) représentant les individus:
 
-    $$
-    X = \begin{bmatrix}
-    x_{1,1} & x_{1,2} & \cdots & x_{1,p} \\
-    x_{2,1} & x_{2,2} & \cdots & x_{2,p} \\
-    \vdots & \vdots & \ddots & \vdots \\
-    x_{n,1} & x_{n,2} & \cdots & x_{n,p}
-    \end{bmatrix}     
-    $$
-
     - Chaque individu  $x_i$ du tableau $X$ est considéré comme un point d’un espace vectoriel E = $R^p$ de dimension p.
     
     - L’ensemble des individus constitue un nuage de points dans E.
+
+$$
+X = \begin{bmatrix}
+x_{1,1} & x_{1,2} & \cdots & x_{1,p} \\
+x_{2,1} & x_{2,2} & \cdots & x_{2,p} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n,1} & x_{n,2} & \cdots & x_{n,p}
+\end{bmatrix}     
+$$
+
 
 
 - **objetcif :** 
@@ -43,26 +44,26 @@
 
 ### 2.1 **Definitions:**
 
-- **la moyenne $\bar{x}_j$ et l'écart type $\sigma_j$ des données de la colonne $j$ :**
 
-    - **Calcul de la moyenne** :
-        La moyenne $\bar{x}_j$ des données de la colonne $j$ est calculée comme suit :
+- **Calcul de la moyenne** :
+    La moyenne $\bar{x}_j$ des données de la colonne $j$ est calculée comme suit :
         
-        $$
-        \bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{i,j}
-        $$
+$$
+\bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{i,j}
+$$
         
-        où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ .
+où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ .
 
-    - **Calcul de l'écart type** :
+- **Calcul de l'écart type** :
 
-        L'écart type $\sigma_j$  des données de la colonne $j$ est calculé comme suit :
+    L'écart type $\sigma_j$  des données de la colonne $j$ est calculé comme suit :
 
-        $$
-        \sigma_j = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_{i,j} - \bar{x}_j)^2}
-        $$
+$$
+\sigma_j = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_{i,j} - \bar{x}_j)^2}
+$$
 
-        où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ et $\bar{x}_j$ est la moyenne de la colonne  $j$ .
+où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ et $\bar{x}_j$ est la moyenne de la colonne  $j$ .
+
 
 - **Centrer, réduire, standardiser les données $X$ :**
 
@@ -132,15 +133,15 @@
 
         si $v_1, v_2, \ldots, v_k $ sont les $k$ premiers vecteurs propres, alors les composantes principales $PC_1, PC_2, \ldots, PC_k$ sont obtenues par :
 
-        $$ PC_i = Y \cdot v_i$$
+        $$PC_i = Y \cdot v_i$$
 
 
 
 - **Valeurs propres et variance expliquée** :
    Les valeurs propres $\lambda_i$ de $V$ représentent la quantité de variance expliquée par chaque composante principale. Elles sont ordonnées de manière décroissante :
-   $$
-   \lambda_1 \geq \lambda_2 \geq \ldots \geq \lambda_p
-   $$
+$$
+\lambda_1 \geq \lambda_2 \geq \ldots \geq \lambda_p
+$$
 
 
 
@@ -152,7 +153,7 @@
 
     - supposons que $Y$ soit la matrice de données centrée , et  $U$  est la matrice dont les colonnes sont les vecteurs propres de la matrice de covariance (ou de corrélation) de $Y$ (matrice de rotation ), alors la matrice des composantes principales $C$ est donnée par :
 
-    $$C = Y \cdot U$$
+$$C = Y \cdot U$$
 
 
 
