@@ -11,7 +11,7 @@
 
     - On a un tableau de données représenté par une matrice $X$  qui contient $p$ colonnes ( $x^j$ ) représentant les variables et $n$ lignes (  $x_i$  ) représentant les individus:
 
-    - Chaque individu  $x_i$ du tableau $X$ est considéré comme un point d’un espace vectoriel E = $R^p$ de dimension p.
+    - Chaque individu  $x_i$ du tableau $X$ est considéré comme un point d’un espace vectoriel $E$ = $R^p$ de dimension p.
     
     - L’ensemble des individus constitue un nuage de points dans E.
 
@@ -47,7 +47,7 @@ $$
 
 - **Calcul de la moyenne** :
     La moyenne $\bar{x}_j$ des données de la colonne $j$ est calculée comme suit :
-        
+
 $$
 \bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{i,j}
 $$
@@ -65,29 +65,25 @@ $$
 où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ et $\bar{x}_j$ est la moyenne de la colonne  $j$ .
 
 
-- **Centrer, réduire, standardiser les données $X$ :**
 
-    - **Centrer les données** : Pour centrer les données, chaque élément $x_{i,j}$ de la matrice $X$ est centré autour de la moyenne de sa colonne :
+- **Centrer les données** : Pour centrer les données, chaque élément $x_{i,j}$ de la matrice $X$ est centré autour de la moyenne de sa colonne :
 
-        $$
-        x_{\text{centré},i,j} = x_{i,j} - \bar{x}_j
-        $$
-
-
-    - **Réduire les données** : La réduction des données consiste à diviser chaque élément $x_{\text{centré},i,j}$ par l'écart type de sa colonne :
-
-        
-        $$
-        x_{\text{réduit},i,j} = \frac{x_{\text{centré},i,j}}{\sigma_j}
-        $$
+$$
+x_{\text{centré},i,j} = x_{i,j} - \bar{x}_j
+$$
 
 
-    - **Standardiser les données** : La standardisation des données combine les étapes de centrage et de réduction :
+- **Réduire les données** : La réduction des données consiste à diviser chaque élément $x_{\text{centré},i,j}$ par l'écart type de sa colonne :
 
-        
-        $$
-        x_{\text{standardisé},i,j} = \frac{x_{i,j} - \bar{x}_j}{\sigma_j}
-        $$
+$$
+x_{\text{réduit},i,j} = \frac{x_{\text{centré},i,j}}{\sigma_j}
+$$
+
+- **Standardiser les données** : La standardisation des données combine les étapes de centrage et de réduction :
+
+$$
+x_{\text{standardisé},i,j} = \frac{x_{i,j} - \bar{x}_j}{\sigma_j}
+$$
 
 
 - **la matrice de covriance  :**
