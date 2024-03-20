@@ -11,15 +11,14 @@
 
     - On a un tableau de données représenté par une matrice $X$  qui contient $p$ colonnes ( $x^j$ ) représentant les variables et $n$ lignes (  $x_i$  ) représentant les individus:
 
-    $$
-        X = \begin{bmatrix}
-        x_{1,1} & x_{1,2} & \cdots & x_{1,p} \\
-        x_{2,1} & x_{2,2} & \cdots & x_{2,p} \\
-        \vdots & \vdots & \ddots & \vdots \\
-        x_{n,1} & x_{n,2} & \cdots & x_{n,p}
-        \end{bmatrix}
-        
-    $$
+$$
+X = \begin{bmatrix}
+x_{1,1} & x_{1,2} & \cdots & x_{1,p} \\
+x_{2,1} & x_{2,2} & \cdots & x_{2,p} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n,1} & x_{n,2} & \cdots & x_{n,p}
+\end{bmatrix}     
+$$
 
     - Chaque individu  $x_i$ du tableau $X$ est considéré comme un point d’un espace vectoriel E = $R^p$ de dimension p.
     
