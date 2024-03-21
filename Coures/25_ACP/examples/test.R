@@ -43,7 +43,27 @@ legend("topleft" , legend = vec , col= c(1 , 2 , 101) , pch=20)
 names <- unique(iris$Species)
 vec <- as.factor(names)
 
-vec
+
+
+# ========================
+
+# visualisation de la projetcion du nugaes de points :
+
+df <- iris
+
+head(df)
+
+names <- unique(iris$Species)
+names
+
+acp <- prcomp(df[, - 5])
+
+# projection sur PC1 , PC2
+plot(acp$x[, 1:2] , col = 1+ 1*(df$Species == names[2]) + 100*(df$Species == names[3]) , pch = 20   )
+grid()
+legend("topleft", legend = names  , col = c(1, 2 ,100) , pch = 20)
+
+
 
 
 

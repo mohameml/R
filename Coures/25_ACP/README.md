@@ -1,5 +1,7 @@
 # cour 25 : **``ACP``**
 
+>Ce cours n'aborde pas la partie théorique de l'ACP. Il est recommandé d'avoir un aperçu de la théorie de l'ACP.
+
 ## 1. **Introduction:**
 
 - **ce qoui L'ACP ? :**
@@ -40,123 +42,14 @@ $$
 
 
 
-## 2. **Résultat théorique :**
-
-### 2.1 **Definitions:**
-
-
-- **Calcul de la moyenne** :
-    La moyenne $\bar{x}_j$ des données de la colonne $j$ est calculée comme suit :
-$$
-\bar{x}_j = \frac{1}{n} \sum_{i=1}^{n} x_{i,j}
-$$
-        
-où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ .
-
-- **Calcul de l'écart type** :
-
-    L'écart type $\sigma_j$  des données de la colonne $j$ est calculé comme suit :
-
-$$
-\sigma_j = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_{i,j} - \bar{x}_j)^2}
-$$
-
-où $n$ est le nombre d'observations et $x_{i,j}$  est l'élément situé à la  $i$ -ème ligne et $j$ -ème colonne de la matrice $X$ et $\bar{x}_j$ est la moyenne de la colonne  $j$ .
-
-
-
-- **Centrer les données** : Pour centrer les données, chaque élément $x_{i,j}$ de la matrice $X$ est centré autour de la moyenne de sa colonne :
-
-$$
-x_{\text{centré},i,j} = x_{i,j} - \bar{x}_j
-$$
-
-
-- **Réduire les données** : La réduction des données consiste à diviser chaque élément $x_{\text{centré},i,j}$ par l'écart type de sa colonne :
-
-$$
-x_{\text{réduit},i,j} = \frac{x_{\text{centré},i,j}}{\sigma_j}
-$$
-
-- **Standardiser les données** : La standardisation des données combine les étapes de centrage et de réduction :
-
-$$
-x_{\text{standardisé},i,j} = \frac{x_{i,j} - \bar{x}_j}{\sigma_j}
-$$
-
-
-- **la matrice de covriance  :**
-
-    ![alt text](image.png)
-
-
-- **la matrice de corrélation :**
-
-    ![alt text](image-1.png)
 
 
 
 
-
-#### RQ : 
-
-- Quand faut-il standardiser ou réduire les données ?: 
-    - Indispensable lorsque les variables ne sont pas exprimées dans la même unité.
-    - Généralement conseillé : permet d’accorder la même importance à chaque variable.
-    - Grande influence sur le résultat de l’étude.
-    - Mise en pratique : fonction ``scale()`` de R.
+## 2. **les fonction `prcomp` && `princomp`:**
 
 
-### 2.2 **Résultat :**
-
-- **Resultat de l'ACP canonique sur une droite :**
-
-    >la droite $\Delta$ qui maximise la quantité d'information du nuage projeté est la droite engéndrée par un vecteur proper  correspondant à la valeur propre maximale de la matrice $V$.
-
-- **Resultat de l'ACP normée sur une droite :**
-
-    >la droite $\Delta$ qui maximise la quantité d'information du nuage projeté est la droite engéndrée par un vecteur proper  correspondant à la valeur propre maximale de la matrice $C$.
-
-- **les composantes principales:**
-
-    - les composantes principales peuvent être définies comme les coordonnées des individus projetés sur l'espace principal. Cet espace principal est déterminé par les vecteurs propres de la matrice de covariance (ou de corrélation) des données, et il est choisi de manière à conserver le maximum d'information possible.
-
-    - **formellement:**
-
-        supposons que $Y$ soit la matrice de données centrée . Les composantes principales $PC_1, PC_2, \ldots, PC_k$  sont alors calculées comme les coordonnées des individus projetés sur les vecteurs propres correspondant aux $k$ plus grandes valeurs propres de la matrice de covariance (ou de corrélation) de $X$ .
-
-
-        si $v_1, v_2, \ldots, v_k $ sont les $k$ premiers vecteurs propres, alors les composantes principales $PC_1, PC_2, \ldots, PC_k$ sont obtenues par :
-
-        $$PC_i = Y \cdot v_i$$
-
-
-
-- **Valeurs propres et variance expliquée** :
-   Les valeurs propres $\lambda_i$ de $V$ représentent la quantité de variance expliquée par chaque composante principale. Elles sont ordonnées de manière décroissante :
-$$
-\lambda_1 \geq \lambda_2 \geq \ldots \geq \lambda_p
-$$
-
-
-
-- **Dimensionnalité et réduction de la dimension** :
-   Pour réduire la dimensionnalité, seules les premières $k$ composantes principales sont conservées, où $k$ est choisi en fonction de la quantité de variance que l'on souhaite conserver.
-
-
-- **la matrice des composantes principales :**
-
-    - supposons que $Y$ soit la matrice de données centrée , et  $U$  est la matrice dont les colonnes sont les vecteurs propres de la matrice de covariance (ou de corrélation) de $Y$ (matrice de rotation ), alors la matrice des composantes principales $C$ est donnée par :
-
-$$C = Y \cdot U$$
-
-
-
-
-## 3. **les fonction `prcomp` && `princomp`:**
-
-
-### 3.1. **la fonction `prcomp`:**
+### 2.1. **la fonction `prcomp`:**
 
 
 - **Description:**
@@ -211,8 +104,6 @@ $$C = Y \cdot U$$
         Cumulative Proportion  0.9246 0.9776 0.97975 0.97988
         ```
 
-        Dans cet exemple, les quatre premières composantes principales sont affichées avec leurs écarts-types, leurs proportions de variance et leurs proportions cumulatives de variance expliquée.
-
 - **Exemple:**
 
     ```R
@@ -232,7 +123,7 @@ $$C = Y \cdot U$$
 
 
 
-### 3.2 **la fonction `princomp`:**
+### 2.2 **la fonction `princomp`:**
 
 - **Description:**
 
@@ -295,7 +186,7 @@ $$C = Y \cdot U$$
     ```
 
 
-### 3.3 **la fonction ``scale()``:**
+### 2.3 **la fonction ``scale()``:**
 
 - **Description:**
     
@@ -345,14 +236,28 @@ $$C = Y \cdot U$$
 
 
 
-## 4. **Visualisation :**
+## 3. **Visualisation :**
 
 
-### 4.1 **Avce ``plot()``:**
+### 3.1 **Visualiser les valeurs propres des composantes principales:**
 
-- Lorsque vous appelez la fonction `plot()` sur un objet résultant de `prcomp()` en R, vous obtenez un graphique représentant les résultats de l'Analyse en Composantes Principales (ACP): 
+
+- **Description:**
+
+    - Lorsque vous appelez la fonction `plot()` sur un objet résultant de `prcomp()` en R, vous obtenez un graphique représentant les résultats de l'Analyse en Composantes Principales (ACP).
 
    - Ce graphique montre les valeurs propres des composantes principales , ce qui permet d'évaluer l'importance de chaque composante dans la représentation des données.
+
+
+- **Syntaxe:**
+
+    ```R
+    # modele ACP 
+    acp <- prcomp(data)
+
+    # plot sur un objet prcomp
+    plot(acp)
+    ```
 
 
 - **Voici un exemple d'utilisation de la fonction `plot()` sur un objet `prcomp` :**
@@ -372,7 +277,55 @@ $$C = Y \cdot U$$
     ![alt text](image-2.png)
 
 
-### 4.2 **Avec ``biplot()``:**
+### 4.2 **Visualiser la projection du nuage de points :**
+
+
+
+- **Syntaxe:**
+
+    ```R
+    plot(modele$x[, 1:2], col = 1 + 1 * (data$class == "type2"), pch = 20, ...)
+    ```
+
+    Dans cette syntaxe :
+
+    - `plot()` utilisée pour créer des graphiques.
+    
+    - `modele$x[, 1:2]` représente les coordonnées des points projetés sur les deux premières composantes principales du modèle.
+    
+    - `col = 1 + 1 * (data$class == "type2")` : 
+        - détermine la couleur des points en fonction de la classe des données. Si la classe est "type2", la couleur est définie comme 2 ; sinon, elle est définie comme 1.
+    
+    - `pch = 20` spécifie le type de point utilisé dans le graphique. Dans ce cas, le point est représenté par un cercle plein.
+    
+    - `...` représente d'autres arguments que vous pouvez ajouter selon vos besoins, tels que les titres, les axes, etc.
+
+- **Exemple:**
+
+    ```R
+
+    # visualisation de la projetcion du nugaes de points :
+
+    df <- iris
+
+    head(df)
+
+    names <- unique(iris$Species)
+    names
+
+    acp <- prcomp(df[, - 5])
+
+    # projection sur PC1 , PC2
+    plot(acp$x[, 1:2] , col = 1+ 1*(df$Species == names[2]) + 100*(df$Species == names[3]) , pch = 20   )
+    grid()
+    legend("topleft", legend = names  , col = c(1, 2 ,100) , pch = 20)
+
+    ```
+
+    ![Alt text](image-3.png)
+
+
+### 4.3 **Avec ``biplot()``:**
 
 - **Description:**
 
@@ -391,23 +344,25 @@ $$C = Y \cdot U$$
     - `pc.biplot` : Une valeur logique indiquant si les flèches représentant les variables doivent être parallèles aux axes des composantes principales. Par défaut, `pc.biplot = FALSE`.
     - `...` : D'autres arguments graphiques à passer à la fonction `plot()` pour personnaliser le biplot.
 
-### Exemple :
-Voici un exemple d'utilisation de la fonction `biplot()` :
-```R
-# Charger les données
-data(iris)
+- **Exemple :**
 
-# Effectuer une ACP
-acp <- prcomp(iris[, -5], scale = TRUE)
+    ```R
+    # Charger les données
+    data(iris)
 
-# Créer un biplot
-biplot(acp, scale = 0)
-```
+    # Effectuer une ACP
+    acp <- prcomp(iris[, -5], scale = TRUE)
 
-Dans cet exemple, nous avons utilisé la fonction `biplot()` sur un objet `prcomp` contenant les résultats de l'ACP sur l'ensemble de données Iris. Nous avons spécifié `scale = 0` pour désactiver le redimensionnement automatique des flèches représentant les variables sur le biplot.
+    # Créer un biplot
+    biplot(acp, scale = 0)
+    ```
+
+    Dans cet exemple, nous avons utilisé la fonction `biplot()` sur un objet `prcomp` contenant les résultats de l'ACP sur l'ensemble de données Iris. Nous avons spécifié `scale = 0` pour désactiver le redimensionnement automatique des flèches représentant les variables sur le biplot.
 
 
-## 5. **le package ``FactoMineR``:**
+    ![Alt text](image-4.png)
+
+## 4. **le package ``FactoMineR``:**
 
 
 
@@ -447,30 +402,3 @@ Dans cet exemple, nous avons utilisé la fonction `biplot()` sur un objet `prcom
 
 
 
-
-## **la fonction ``sdv``:**
-
-1. **Décomposition en valeurs singulières (SVD)** :
-   $$
-   X = U \Sigma V^T
-   $$
-   où $X$  est la matrice de données, $U$  est une matrice orthogonale contenant les vecteurs propres à gauche, $\Sigma$ est une matrice diagonale contenant les valeurs singulières, et $V^T$  est la transposée d'une matrice orthogonale contenant les vecteurs propres à droite.
-
-
-La fonction `svd` en R effectue une décomposition en valeurs singulières (SVD) d'une matrice. Cette décomposition est une technique fondamentale en algèbre linéaire et est utilisée dans de nombreux domaines de l'analyse de données et du calcul numérique. Voici une explication détaillée de cette fonction :
-
-La syntaxe de base de la fonction `svd` est la suivante :
-```R
-svd(A)
-```
-où `A` est la matrice à décomposer.
-
-Cette fonction retourne un objet contenant trois composantes principales :
-
-1. **$d** : Il s'agit d'un vecteur contenant les valeurs singulières de la matrice `A`. Les valeurs singulières sont analogues aux valeurs propres dans la décomposition en valeurs propres, mais pour des matrices non carrées. Elles mesurent l'importance de chaque mode de variation dans les données. Les valeurs singulières sont généralement ordonnées du plus grand au plus petit.
-
-2. **$u** : C'est la matrice des vecteurs singuliers de gauche. Cette matrice contient les vecteurs propres correspondant aux vecteurs propres de `AA^T` (ou `A^T A` si `A` est rectangulaire), où `A^T` représente la transposée de la matrice `A`. Les vecteurs singuliers de gauche capturent les directions dans lesquelles la matrice `A` étend ou réduit les données.
-
-3. **$v** : C'est la matrice des vecteurs singuliers de droite. Cette matrice contient les vecteurs propres correspondant aux vecteurs propres de `A^TA` (ou `AA^T` si `A` est rectangulaire). Les vecteurs singuliers de droite capturent les directions dans lesquelles la matrice `A` étend ou réduit les variables.
-
-La décomposition en valeurs singulières est une technique puissante utilisée dans de nombreux contextes, y compris la réduction de dimensionnalité, la compression de données, la résolution de systèmes linéaires surdéterminés, la résolution de problèmes de moindres carrés, etc. La fonction `svd` en R fournit un moyen efficace de calculer cette décomposition et d'extraire les valeurs singulières et les vecteurs singuliers associés.
