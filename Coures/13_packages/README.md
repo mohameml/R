@@ -34,4 +34,38 @@ library(nom_du_package)
 
 Les packages constituent un aspect central de l'écosystème R, facilitant la collaboration, la distribution et l'utilisation de code dans la communauté R.
 
+## 
+En R, lorsque vous utilisez la notation `package::name`, cela vous permet d'accéder à une fonction ou à un objet spécifique à l'intérieur d'un package sans charger tout le package dans votre environnement de travail.
+
+Par exemple, si vous voulez utiliser une fonction spécifique, comme `filter()` du package dplyr, vous pouvez le faire de deux manières :
+
+1. En chargeant le package et en utilisant la fonction directement :
+
+```R
+library(dplyr)
+filter(data_frame, condition)
+```
+
+2. En utilisant la notation `package::name` :
+
+```R
+dplyr::filter(data_frame, condition)
+```
+
+Les deux méthodes produisent le même résultat, mais la deuxième méthode vous permet d'accéder à la fonction `filter()` sans charger tout le package dplyr. Cela peut être utile lorsque vous ne voulez pas charger tout le package en mémoire, par exemple, si vous n'utilisez qu'une ou deux fonctions spécifiques du package.
+
+##
+En R, la fonction `require()` est utilisée pour charger des packages dans votre session R. La principale différence entre `require()` et `library()` est la manière dont ils gèrent les erreurs lors du chargement d'un package.
+
+Voici comment la fonction `require()` est utilisée :
+
+```R
+require(dplyr)
+```
+
+Cette commande tente de charger le package spécifié, dans cet exemple dplyr. Si le package est déjà installé sur votre système, `require()` le chargera dans votre session. Si le package n'est pas installé, `require()` renverra `FALSE` sans générer d'erreur.
+
+Cependant, il est à noter que `require()` est souvent utilisée dans les scripts R pour éviter les erreurs lorsque vous ne savez pas à l'avance si un package est installé ou non. Si vous êtes sûr que le package est installé, vous pouvez utiliser `library()`. La principale différence réside dans le fait que `library()` générera une erreur si le package spécifié n'est pas trouvé, tandis que `require()` ne générera pas d'erreur et renverra simplement `FALSE`.
+
+
 ## 2. tidyverse

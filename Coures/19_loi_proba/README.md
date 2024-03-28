@@ -31,3 +31,6 @@ matrice_aleatoire <- matrix(runif(9, min = -1, max = 1), nrow = 3)
 ```
 
 La fonction `runif()` est largement utilisée dans la simulation statistique, la génération de données aléatoires et d'autres applications où des nombres aléatoires sont nécessaires. Elle permet de créer des séquences de nombres aléatoires suivant une distribution uniforme sur un intervalle donné.
+
+
+## la fonction sample 

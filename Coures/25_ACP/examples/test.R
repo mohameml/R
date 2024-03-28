@@ -65,6 +65,60 @@ legend("topleft", legend = names  , col = c(1, 2 ,100) , pch = 20)
 
 
 
+# les composantes pricipales sont céntrées 
+acp$x[,1]
+
+# ========== verifications des proprétes de PC
+
+# PC_i <- acp$x[,i]
+
+
+
+
+
+# mean(PC_i) = 0
+# var(PC_i) = lambda_i 
+# M-orthogonaux ie sum(PC_i*PC_j) = 0
+
+
+
+# qualité de representation des individus :
+
+ind.1 <- acp$x[1,]
+
+qualite <- function(x ,j) {
+  q <- x[j]^2 / sum(x^2)
+  return(q)  
+}
+
+
+print(qualite(acp$x[1,] , 2))
+
+# choix de q: 
+
+
+lambada <- acp$sdev^2
+lambada.norme <- lambada/sum(lambada)
+lambada.norme
+
+?cumsum 
+# Returns a vector whose elements are the cumulative sums,
+
+cumsum(lambada.norme)[cumsum(lambada.norme) >= 0.99]
+
+
+
+round(mean(lambada))
+
+
+# ======
+
+lambada[lambada > mean(lambada)]
+
+# 
+
+plot(lambada.norme , type="l" )
+
 
 
 

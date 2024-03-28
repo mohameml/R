@@ -1,0 +1,127 @@
+---
+title: "SOlution"
+author: "Nebil"
+output: 
+  html_document:
+    number_sections: false
+    toc_float: true
+---
+
+# Data preparation 
+
+```{r}
+df <- mtcars 
+
+head(df)
+colnames(df)
+
+library(dplyr)
+```
+
+
+
+# Q1 :
+
+### Return rows of cars that have an mpg value greater than 20 and 6 cylinders
+
+```{r}
+
+df %>% filter(mpg > 20 , cyl == 6 )
+
+
+```
+
+
+# Q2 :
+
+### Reorder the Data Frame by cyl first, then by descending wt.
+
+```{r}
+df %>% 
+  arrange(cyl , desc(wt)) %>%  
+  head()
+
+```
+
+
+
+# Q3 :
+
+### Select the columns mpg and hp
+
+```{r}
+
+df %>% 
+  select(mpg , hp) %>% 
+  head()
+
+```
+
+
+# Q4 :
+
+### Select the distinct values of the gear column
+
+```{r}
+
+df %>% distinct(gear)
+
+unique(df$gear)
+
+```
+
+
+# Q5 :
+
+### Create a new column called "Performance" which is calculated by hp divided by wt
+
+```{r}
+
+df %>% 
+  mutate(Performance = hp/wt) %>% 
+  head()
+
+
+```
+
+# Q6 :
+
+### find the mean mpg value using dplyr
+
+```{r}
+
+df %>% summarise(mean_mpg = mean(mpg))
+
+```
+
+
+# Q7 :
+
+### Use pipe operators to get the mean hp value for cars with 6 cylinders.
+
+
+```{r}
+df %>% 
+  filter(cyl == 6) %>% 
+  summarise(mean_hp = mean(hp))
+# 122.2857	
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,9 +10,9 @@
     - 07_dataframe : done 
     - 08_lists : done 
     - 09_read_data : csv , excel , 
-    - 10_conditions
-    - 11_boucles
-    - 12_fonctions
+    - 10_conditions : done 
+    - 11_boucles : done 
+    - 12_fonctions : done 
     - 13_packages
     - 14_data_manipulation
     - 15_graphique_base_R
@@ -30,6 +30,8 @@
     - 24_anova : 
         - 01_anova_one_way : done
         - 02_anova_two_way :
- 
-    - 25_split_validation 
+    
+    - 25_ACP : done 
+    - 26_FactoMienR
+    - 26_split_validation 
 

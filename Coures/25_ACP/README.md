@@ -362,20 +362,113 @@ $$
 
     ![Alt text](image-4.png)
 
-## 4. **le package ``FactoMineR``:**
+
+
+## 5. **Règle de choix de q : nombre de composantes principales**
+
+### 5.1 **Régle de l'inertie:** 
+
+- **Description:**
+
+    >on chosit q tq : 
+
+$$
+\frac{\lambda_1 + \dots + \lambda_q}{\sum_{l=1}^{n}\lambda_l} \geq 70\%
+$$
 
 
 
-## RQ : 
+- **En pratique :**
+
+    ```R
+    
+    lambda <- acp$sdev^2 # les valeures propres lambda_1 , .... lambda_p 
+    lambdanorm <- lambda /sum(lambda)
+
+    # cumsum(x : vector) -> Returns a vector whose elements are the cumulative sums
+    cumsum(lambdanorm)[cumsum(lambdanorm) >= 0.7]
+    ```
+
+- **Exemple:**
+
+    ```R
+    data(iris)
+    acp <- prcomp(iris[, -5], scale = TRUE)
+    
+    # choix de q: 
+    lambada <- acp$sdev^2
+    lambada.norme <- lambada/sum(lambada)
+
+    cumsum(lambada.norme)[cumsum(lambada.norme) >= 0.99]
+
+    ```
 
 
 
 
+### 5.2 **Régle de Kaiser:**
+
+- **Description:**
+    
+    >Critère de Kaiser : Selon la règle de Kaiser, vous devriez conserver uniquement les composantes principales dont les valeurs propres sont supérieures à 1 (à $\bar{\lambda}$ ).
+
+
+- **En pratique :**
+
+    ```R
+    
+    lambda <- acp$sdev^2 # les valeures propres lambda_1 , .... lambda_p 
+    lambda[lambda > mean(lambda)]
+    ```
+
+- **Exemple:**
+
+    ```R
+    data(iris)
+    acp <- prcomp(iris[, -5], scale = TRUE)
+    
+    # choix de q: 
+    lambada <- acp$sdev^2
+
+    lambada[lambada > mean(lambada)]
+    # [1] 4.228242
+
+    ```
+
+
+### 5.3 **Régle de coude:**
 
 
 
+- **Description:**
+    
+    >On trace le graphe de $(j , \lambda_j)$ et on  Choisit le nombre de composantes juste avant le coude dans le graphique.
+
+- **En pratique :**
+
+    ```R
+    
+    lambda <- acp$sdev^2 # les valeures propres lambda_1 , .... lambda_p 
+    lambada.norme <- lambada/sum(lambada)
+    plot(lambda.norme , type="l" , xlim=c(0 , 100))
+    grid()
+    ```
+
+- **Exemple:**
+
+    ```R
+    data(iris)
+    acp <- prcomp(iris[, -5], scale = TRUE)
+    
+    # choix de q: 
+    lambada <- acp$sdev^2
 
 
+    plot(lambada.norme , type="l" )
+
+    ```
+
+    ![alt text](image-5.png)
 
 
 
