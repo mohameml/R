@@ -1,0 +1,152 @@
+---
+title: "Untitled"
+author: "chrifmhm_mohameml"
+date: "2024-03-28"
+output: ''
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# import of library :
+
+library(ggplot2)
+
+ggplot(mpg, aes(cty, hwy, colour = class)) +
+  geom_point()
+
+ggplot(mpg, aes(cty, hwy, colour = class)) +
+  geom_point() +
+  scale_colour_viridis_d()
+
+
+head(mpg)
+
+unique(mpg$class)
+```
+
+
+
+
+Exemple avce data iris : 
+
+
+```{r}
+library(ggplot2)
+
+# Création d'un graphique simple
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point() +
+  scale_color_manual(values = c("setosa" = "blue", "versicolor" = "green", "virginica" = "red"))
+
+```
+
+
+## la couche Factes :
+
+Exemple 
+```{r}
+
+
+library(ggplot2)
+
+# Création d'un graphique avec facettes
+ggplot(data = mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_grid(drv ~ year)
+
+
+
+
+head(mpg)
+unique(mpg$drv)
+plot(mpg[mpg$year == 1999 & mpg$drv == 4])
+
+library(dplyr)
+
+df <- 
+  
+  
+mpg %>% 
+  filter(year == 1999 , drv=="4") %>% 
+  ggplot( aes(x = displ , y = hwy)) + geom_point()
+
+
+head(df)
+
+
+ggplot(data = df , aes(x= displ , y = hwy)) + geom_point()
+
+
+
+
+```
+
+
+
+
+
+## Exemple de Corrdinates 
+
+```{r}
+
+library(ggplot2)
+
+# Création d'un graphique avec un aspect ratio fixe
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point() +
+  coord_fixed()
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Théme : 
+
+Exemple :
+
+
+```{r}
+
+
+# Création d'un graphique simple
+gg <- ggplot(mtcars, aes(x = mpg, y = wt, color = factor(cyl))) +
+  geom_point() +
+  labs(title = "Relation entre la consommation de carburant et le poids",
+       x = "Miles per Gallon (mpg)",
+       y = "Weight (1000 lbs)",
+       color = "Cylinders") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        legend.position = "top")
+
+# Affichage du graphique
+print(gg)
+
+
+
+```
+
+
+```{r}
+```
+
+
+
