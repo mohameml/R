@@ -1,0 +1,58 @@
+
+### 1. la fonction glm :
+
+```{r}
+# on défint une data.frame :
+
+df <- iris
+names(df)
+# la fonction glm :
+?family
+model <- glm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width , data = df , 
+             family = Gamma(link = "inverse"))
+summary(model)
+
+1/coef(model)
+
+coef(model)
+
+deviance(model)
+```
+
+```{r}
+# le choix du milleu modéle :
+
+
+dev.min <- function(index) {
+  choix <- rbind(1 , 1+combn(3,2))
+  devianc.models <- rep(0 , NCOL(choix))
+
+  i <- 1 
+  for (j in 1:NCOL(choix) ){
+    cas <- choix[, j]
+    model <- glm(Sepal.Length ~ . , data = df[ , cas] , family = Gamma(link = "inverse"))
+    devianc.models[i] <-  deviance(model)
+    names(devianc.models)[i] <- paste(names(df)[cas[c(2,3)]] ,collapse =  "+")
+    i <- i + 1 
+  }
+  
+  print(devianc.models)
+  
+  
+}
+
+dev.min(2) # le min est : Sepal.Length ~ Sepal.Width+Petal.Length
+
+library(MASS)
+model <- glm(Sepal.Length ~ Sepal.Width+Petal.Length , data = df , family = Gamma(link = "inverse"))
+summary(model)
+stepAIC(mode)
+?stepAIC
+```
+
+
+```{r}
+
+
+```
+

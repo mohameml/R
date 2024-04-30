@@ -1,0 +1,263 @@
+---
+title: "TP3"
+author: "A REMPLIR ABSOLUMENT"
+output: 
+  html_document:
+    number_sections: false
+    toc_float: true
+---
+
+```{r setup, include=FALSE, message=FALSE}
+#see full list >knitr::opts_chunk$get()
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", prompt = TRUE, comment="",
+                      message = FALSE, warning=FALSE)
+question <- 1
+
+```
+
+
+# Data preparation 
+
+
+## Question 1
+
+
+
+```{r, echo=FALSE}
+# lecture du data
+BreastCancer <- read.csv("BreastCancer.csv", header=TRUE, stringsAsFactors = TRUE) 
+
+# Exploration :
+str(BreastCancer)
+head(BreastCancer)
+
+# Clean data :
+table(is.na(BreastCancer))
+BreastCancer <- na.omit(BreastCancer)
+table(is.na(BreastCancer))
+
+```
+
+
+## Question 2 : ?? 
+
+```{r}
+head(BreastCancer)
+explvar <- c("Clump.Thickness", 
+             "Uniformity.of.Cell.Size",
+             "Uniformity.of.Cell.Shape",
+             "Marginal.Adhesion",
+             "Single.Epithelial.Cell.Size",
+             "Bare.Nuclei",
+             "Bland.Chromatin",
+             "Normal.Nucleoli",
+             "Mitoses")
+summary(BreastCancer[, explvar])
+summary(log(BreastCancer[explvar]))
+
+
+```
+
+Make (advanced) bivariate scatterplots which reveals some affine patterns.
+```{r, echo=FALSE}
+#make 2D-density
+panel.density <- function(x, y, nbgrid = 100, nbcol = 100, 
+                          col4ramp = c("green", "yellow", "orange", "red"), ...) 
+{
+  require(MASS)
+  k <- try(kde2d(x, y, n = nbgrid), silent = TRUE)
+  if(!inherits(k, "try-error"))
+  image(k, col = colorRampPalette(col4ramp)(nbcol), add = TRUE, 
+    xlim = range(x, na.rm = TRUE), ylim = range(y, na.rm = TRUE))
+}
+#make histogram
+panel.hist <- function(x, ...) 
+{
+    usr <- par("usr")
+    on.exit(par(usr))
+    par("usr" = c(usr[1:2], 0, 1.5))
+    his <- hist(x, plot = FALSE)
+    breaks <- his$breaks
+    nB <- length(breaks)
+    y <- his$counts
+    y <- y/(1.1*max(y))
+    rect(breaks[-nB], 0, breaks[-1], y, col = rgb(0, 1, 1, alpha = 0.5), ...)
+}
+pairs(BreastCancer[, c(explvar, "Class")], lower.panel=panel.density,
+      diag.panel = panel.hist, cex=0.5)
+
+logBreastCancer <- log(BreastCancer[ , explvar])
+pairs(logBreastCancer, lower.panel=panel.density,
+      diag.panel = panel.hist, cex=0.5)
+```
+
+
+```{r}
+library(corrplot)
+mat.cor <- cor(log(BreastCancer[ , explvar]))
+corrplot(mat.cor)
+```
+
+
+## Question 3
+
+# Principal component analysis using `stats` package
+
+
+
+## Question 4
+
+-  prcomp() : effectue une ACP en utilisant decompostion en valeurs singuliéres SVD
+
+- princomp() : effectue une ACP en utilisant la decompistion en valeures propres de la matrice de covariance V
+
+
+par défaut ce deux fonction effectue l'ACP Canonique ie Metrique M = I 
+
+
+## Question 5
+
+```{r}
+X <- as.matrix(log(BreastCancer[, explvar]))
+breast.prcomp <- prcomp(X, scale=FALSE)
+breast.princomp <- princomp(X, cor=FALSE)
+```
+
+
+### Subquestion (a)
+
+```{r}
+X.cov <- cov(X)
+dim(X.cov)
+
+# on calcul les vecteures propres 
+diag.V <- eigen(X.cov)
+val.prop.V <- diag.V$values
+vec.prop.V <- diag.V$vectors
+
+
+# check taht lambda_k = s_k^2 
+  
+cbind("s_k^2" = breast.prcomp$sdev^2 , "lambda_k" =val.prop.V )
+
+```
+
+
+### Subquestion (b)
+
+```{r}
+# Check the first eigenvector and the first axis breast.prcomp$loadings[,1] :
+cbind("u_1" = vec.prop.V[,1] , "princomp$loadings[,1]" = breast.princomp$loadings[,1])
+
+```
+
+
+### Subquestion (c)
+
+
+```{r}
+# la matrice d'observation ie C : la matrice de composnate principale 
+# C = YMU or M = I d'ou C = YU 
+
+Y <- scale(X ,center = TRUE , scale = FALSE)
+U <- diag.V$vectors
+C <- Y %*% U 
+
+# On compare C avce breast.prcomp$x
+C
+breast.prcomp$x
+```
+
+
+## Question 6
+
+
+### Subquestion (a)
+
+```{r}
+# Center the observations 
+X.s <- scale(X, center = TRUE, scale = FALSE) /sqrt(nrow(X) - 1)
+
+```
+
+
+
+### Subquestion (b)
+
+```{r}
+# Using svd(), check the explained variances against the output breast.prcomp$sdev :
+
+# decompostion en valeurs singuliéres : UΣV^T
+decomp.svd <- svd(X.s)
+val.prop.svd <- decomp.svd$d
+
+# Comparasion :
+cbind(val.prop.svd , breast.prcomp$sdev)
+
+```
+
+
+
+### Subquestion (c)
+
+```{r}
+# Using svd(), check the right singular vectors against the output breast.prcomp$rotation
+decomp.svd$v
+breast.prcomp$rotation
+
+# Verification des QQ prop des composantes principales
+round(mean(breast.prcomp$rotation[,1]))
+round(mean(breast.prcomp$rotation[,1]*t(breast.prcomp$rotation[,1])))
+ 
+```
+
+
+
+## Question 7
+
+
+```{r}
+# Interpret the values of explained variances. Use summary() and plot() on breast.prcomp :
+summary(breast.prcomp)
+
+```
+
+
+```{r}
+# le comportement du plot avce un objet de type prcomp 
+
+plot(breast.prcomp , main = "Répresentation du variances en fonction du k" ,
+     xlab ="k" , col = "blue")
+
+
+```
+
+
+## Question 8
+
+
+```{r}
+biplot(breast.prcomp)
+```
+
+
+```{r}
+plot(breast.prcomp$x[, c(1,2)], 
+     col=1+1*(BreastCancer$Class == "malignant") , pch = 20 , 
+     main = "Projetction des indvidus sur PC1 , PC2" , xlab = "PC1" , 
+     ylab ="PC2" )
+grid()
+legend("topleft" , legend = c("bening" ,"malignant") , col = c(1 ,2) , pch = 20 )
+
+```
+
+# Principal component analysis using `FactoMineR` package
+
+
+
+## Question  9
+
+## Question 10
+
+## Question 11
+

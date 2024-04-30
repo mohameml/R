@@ -117,7 +117,7 @@ Dans cet exemple, nous avons inclus la variable `Species` du jeu de données `ir
 La fonction `dimdesc()` du package FactoMineR est utilisée pour effectuer une analyse des dimensions descriptives (DimDesc) sur les résultats d'une Analyse en Composantes Principales (ACP) ou sur d'autres méthodes de réduction de dimension telles que l'Analyse Factorielle des Correspondances (AFC). Cette fonction permet d'identifier les variables qui contribuent le plus à la construction de chaque dimension de l'analyse.
 
 ### Description :
-La fonction `dimdesc()` effectue une analyse des dimensions descriptives sur les résultats d'une ACP ou d'une AFC afin d'identifier les variables les plus liées à chaque dimension. Elle fournit des informations sur les variables qui contribuent le plus à la construction de chaque dimension, en mettant en évidence les corrélations entre les variables et les dimensions.
+La fonction `dimdesc()` effectue une **analyse des dimensions descriptives**  sur les résultats d'une ACP ou d'une AFC afin d'identifier les variables les plus liées à chaque dimension. Elle fournit des informations sur les variables qui contribuent le plus à la construction de chaque dimension, en mettant en évidence les corrélations entre les variables et les dimensions.
 
 ### Syntaxe :
 ```R

@@ -1,0 +1,485 @@
+---
+title: "TP2"
+author: "A REMPLIR"
+output: 
+  html_document:
+    number_sections: false
+    toc_float: true
+---
+
+<!-- see help at https://bookdown.org/yihui/rmarkdown-cookbook/latex-output.html -->
+
+```{r setup, include=FALSE, message=FALSE}
+#see full list >knitr::opts_chunk$get()
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", prompt = TRUE, comment="", message = FALSE, warning = FALSE)
+```
+
+# Preliminary analysis of the data
+
+## Question 1
+
+```{r}
+prostate.data <- read.table("prostate.data.txt" , header = TRUE)
+prostate.data <- prostate.data[, -10] # pour supprimer le colonne train 
+View(prostate.data)
+
+str(prostate.data)
+summary(prostate.data)
+
+
+```
+
+## Question 2
+
+```{r}
+pairs(prostate.data)
+
+# ou on peut calculer la matrice de corrolation :
+cor(prostate.data)
+
+
+```
+
+
+
+
+
+```{r}
+library(corrplot)
+corrplot(cor(prostate.data))
+
+
+```
+D'après la matrice de corrélation et sa représentation, on n'a que le variable le plus relier à lcavol sont lpsa et lcp .
+
+
+# Linear regression
+
+## Question 3
+
+- RQ : Cas de régression si l'un de variables explicatives est catégorielle ? 
+
+```{r}
+# gleason and svi have to be considered as qualitative variables: convert them with 
+# factor().
+
+prostate.data$svi <- as.factor(prostate.data$svi)
+prostate.data$gleason <- as.factor(prostate.data$gleason)
+# verification : 
+str(prostate.data)
+
+
+# Régression lineaire : lcavol ~ . 
+lm.all <- lm(lcavol ~ . , data = prostate.data)
+summary(lm.all)
+
+
+```
+
+## Question 4
+
+```{r}
+confint(lm.all , level = 0.95)
+
+```
+
+## Question 5
+
+# What can you say about the effect of the lpsa variable :
+
+- D'aprés le Resultat de la Régression linéaire on que le p-value du test de nullité du oefficnet  du lpas est trés faible donc le choix du lpsa dans le modéle de régression est trés pertiante 
+
+- de meme avec un niveau de cofiance 95% on a que 0 n'appartient pas à l'intervalle de cofiance de lpsa ce qui confirme bien la pertiance de choix du lpas dans le modéle de régression 
+
+
+
+
+
+## Question 6
+
+```{r}
+# Plot the predicted values of lcavol as a function of the actual values :
+plot(fitted.values(lm.all) , prostate.data$lcavol , col="red" , pch=20 , 
+     main="the predicted values of lcavol as a function of the actual values" ,
+     xlab="predicted values of lcavol" , ylab = "actual values of lcavol")
+
+abline(a=0 , b=1 , col="blue")
+```
+On observe bien que les points sont autoures de la droite y = x 
+
+```{r}
+# Plot the histogram of residuals.
+# Can we admit that the residuals are normally distributed
+hist(resid(lm.all))
+```
+
+```{r}
+# Test de Shapiro 
+shapiro.test(resid(lm.all)) # p-value = 70% => distrubtion normale 
+```
+
+On a que le p-value est de 70% donc on bien adaptée la normalitée de residus .
+
+
+
+```{r}
+#  Compute the residual sum of squares : RSS 
+RSS <- sum((prostate.data$lcavol -  fitted.values(lm.all))^2)
+RSS
+
+# ou avec : 
+sum(resid(lm.all)^2)
+
+
+```
+
+
+## Question 7
+
+#  What do you think of the optimality of this model? :
+
+D'aprés le Resulalt du Modéle et les intervalles de confiance on des variables qui présentet de p-value trés faible donc  on peut optimisez mieux ce modéle 
+
+
+## Question 8
+
+```{r}
+# What happens if predictors lpsa and lcp are removed from the model? Try to explain this new # result
+
+summary(lm(lcavol ~ . - lpsa - lcp , data = prostate.data))
+
+```
+
+$R^2 = 43%$ trés faibe par rapport au le modéle de régression précedent 
+
+
+## Question 9
+
+```{r}
+# What happens if predictor lweight is removed from the model? Try to explain this new result
+
+summary(lm(lcavol ~ . - lweight , data = prostate.data))
+
+```
+
+On a presque le méme $R^2$ du 1 ére modéle de Régression 
+
+# Anova -- effects of the qualitative variables
+
+## Question 10
+
+```{r}
+lm.gleason <- lm(lcavol ~ gleason , data = prostate.data)
+summary(lm.gleason)
+model.matrix(lm.gleason)
+```
+
+## Question 11
+
+```{r}
+formule.reg <- formula(lcavol ~ gleason - 1)
+lm.gleason <- lm(formule.reg , data = prostate.data)
+summary(lm.gleason)
+
+```
+
+## Question 12
+
+```{r}
+# anova :
+anova.lm <- anova(lm.gleason)
+
+
+
+```
+- On a que le p-value du Test d'anova est trés faible donc le volume du tumeur de prostate présente une variabilité importante selon le niveau de gleason .
+
+
+```{r}
+# aov :
+av <- aov(lcavol ~ gleason - 1, data = prostate.data ) 
+summary(av)
+
+# table of ANOVA one-way :
+# mean(prostate.data$lcavol[prostate.data$gleason == 6])
+# summary(prostate.data$gleason)
+model.tables(av)
+
+```
+
+### Interprétation :
+
+
+- On remarque dans le résultat de `model.tables(av)` que pour le niveau 9 de `gleason` avec seulement 5 observations, la moyenne est de 2.128, ce qui est supérieur aux autres niveaux. Ainsi, le volume de la tumeur de la prostate est assez important au niveau 9. Par contre, pour le niveau 6 avec 35 observations, la moyenne est de 0.5649, ce qui indique que le volume de la prostate au niveau 6 est très faible par rapport aux autres niveaux. Ceci est bien conforme avec les résultats de l'ANOVA présentés.
+
+
+## Question 13
+
+```{r}
+
+# two way ANOVA 
+anova.svi.gleason.1 <- aov(lcavol ~ 0 + svi*gleason , data = prostate.data)
+summary(anova.svi.gleason.1)
+
+coef(anova.svi.gleason.1)
+dummy.coef(anova.svi.gleason.1)
+```
+
+### Interprétation :
+
+
+
+- D'après le résultat de l'ANOVA, on constate que lcavol présente une variabilité importante entre les niveaux du svi avec une moyenne de 122.695 et une p-value très faible. Ainsi, l'effet du svi sur lcavol est très significatif.
+
+- De même, gleason présente un effet assez important avec une p-value inférieure à 5%. En revanche, l'interaction entre svi et gleason n'a pas un effet considérable sur lcavol.
+
+
+
+## Question 14 : ?? 
+
+```{r}
+# Consider now cross-effect only with 0+svi:gleason
+anova.svi.gleason.2 <- aov(lcavol ~ 0+svi:gleason , data = prostate.data)
+summary(anova.svi.gleason.2)
+```
+
+# Best subset selection
+
+## Question 15 : 
+
+```{r}
+
+# ?deviance
+
+lm.pro.5a <- lm(lcavol ~ 1, data= prostate.data) # taille = 0 
+lm.pro.5b <- lm(lcavol ~ ., data=prostate.data[, c(1,2,3)]) # taille = 3
+lm.pro.5c <- lm(lcavol ~ ., data=prostate.data[, c(1,2,5)]) # taille = 3
+
+# la fonction deviance sur un objet lm calcul le RSS
+#  RSS = sum(resid(lm.pro.5a)^2)
+deviance(lm.pro.5a)
+deviance(lm.pro.5b)
+deviance(lm.pro.5c)
+```
+
+
+
+
+```{r}
+# ?anova
+# Tableau de devaince entre les modeles : 
+anova(lm.pro.5a, lm.pro.5b, lm.pro.5c)
+
+```
+
+`anova(lm.pro.5a, lm.pro.5b, lm.pro.5c)` donne un tableau qui resume les infos du chaque modéle  et dans ce tableau on observe bien que le modéle 2 `lm.pro.5b` présente une p-value trés faible ce qui lui rend le modéle le plus pertinate parmi ces modéles 
+
+
+
+## Question 16
+
+```{r}
+# Compute the residual sums of squares for all models of size k = 2 using the code below :
+
+all2colnum <- rbind(1, 1+combn(8, 2))
+
+#compute
+all2colrss <- sapply(1:NCOL(all2colnum), function(i) deviance(lm(lcavol ~ ., data=prostate.data[, all2colnum[,i]])))
+
+
+#add names 
+names(all2colrss) <- sapply(1:NCOL(all2colnum), function(i) paste(colnames(prostate.data)[all2colnum[-1,i]], collapse = "-"))
+
+all2colrss
+
+all2colrss[all2colrss == min(all2colrss)]
+
+```
+
+Donc le Resultat  est lcp-lpsa  avc RSS = 47.2781 , donc pour un modéle de taille 2 le meilleur choix qui minimise RSS c'est le choix de lcp-lpsa .
+
+
+
+## Question 17
+
+```{r}
+# For each value of k ∈ {0, . . . , 8}, select the set of predictors that minimizes the residual sum of squares:
+# make a function
+
+RSS.min.K <- function(k) {
+  allKCombn <- rbind(1 , 1+combn(8 ,k))
+  all.RSS <- sapply(1:NCOL(allKCombn), function(i) deviance(lm(lcavol ~ . , data = prostate.data[ , allKCombn[, i]])))
+  names(all.RSS) <- sapply(1:NCOL(allKCombn) , function(i) paste(colnames(prostate.data)[allKCombn[-1, i]], collapse = "-" ))
+  return(all.RSS[all.RSS == min(all.RSS)])
+}
+
+RSS.min.v <- sapply(1:8 , FUN = RSS.min.K)
+RSS.min.v
+
+names(RSS.min.v)[2]
+
+strsplit(names(RSS.min.v)[2] ,"-")[[1]]
+
+
+
+```
+
+```{r}
+plot(1:8 , RSS.min.v , col="red" , pch = 20 , 
+     main="La valeur du RSS minimale en fnction du taille k du modéle " , 
+     xlab ="taille du Modéle " , ylab = "la valeur du RSS miniamle " , 
+     type = "b")
+legend("topright" , legend = names(RSS.min.v) , col = "red" , pch=20 )
+
+```
+
+
+
+## Question 18
+
+# Do you think that minimizing the residual sum of squares is well suited to select the optimal size for
+# the regression models? Could you suggest another possibility? :
+
+On peut utiliser le coefficent de détermination $R^2$ au lieu RSS
+
+# Split-validation
+
+## Question 19
+
+La validation croisée "split-validation", est une technique utilisée pour évaluer la performance d'un modèle prédictif.
+
+L'idée principale de la validation croisée est de diviser l'ensemble de données en plusieurs sous-ensembles (ou "folds"), d'utiliser un sous-ensemble pour tester le modèle et les autres pour l'entraînement, puis de répéter ce processus plusieurs fois en changeant le sous-ensemble de test à chaque fois. Les performances du modèle sont ensuite moyennées sur les différentes itérations pour obtenir une estimation plus fiable de sa capacité prédictive.
+
+
+
+## Question 20
+
+```{r}
+test <- 1:NROW(prostate.data) %% 3 == 0
+
+# Let us assume that the best model is of size 2
+RSS.min.v[2] # (lcp , lpsa) -> (6 , 9)
+
+# ?subset to see the subset argument 
+# Modéle de regression lcavol ~ lcp + lpsa sur le 2/3 de data :
+lm.lcp.lpsa <- lm(lcavol ~ . , data = prostate.data[ , c(1 , 6 ,9)] , subset = !test) 
+
+```
+
+
+
+```{r}
+# What is the mean training error for the model :
+lcavol.subset <- subset(prostate.data , subset = !test)$lcavol
+trainig_err.mean <- mean((lcavol.subset - fitted.values(lm.lcp.lpsa))^2) 
+trainig_err.mean  
+
+```
+
+Donc en moyenne l'erreur d'entrainment du Modéle est de 0.4616 
+
+
+## Question 21
+
+```{r}
+# Predict values of lcavol on the validation set for the regression model of size two :
+data.test <- subset(prostate.data[ , c(1, 6 , 9)] , subset = test)
+
+predict.vec.test <- predict(lm.lcp.lpsa , newdata =  data.test)
+
+predict.err.mean <- mean((data.test$lcavol - predict.vec.test)^2)
+predict.err.mean
+
+```
+
+Donc en moyenne l'erreur de validation du Modéle est de 0.5672 
+
+
+## Question 22
+
+```{r}
+
+index <- function(k) {
+  vec <- c("lcavol" ,strsplit(names(RSS.min.v)[k] ,"-")[[1]])
+  return(vec)
+}
+
+
+err.training.val <- function(k) {
+  
+  # on divise df en deux partie : 
+  df.training <- subset(prostate.data[ , index(k)] , subset = !test)
+  df.test <- subset( prostate.data[ , index(k)] , subset = test)
+  
+  model <- lm(lcavol ~ . , data = df.training)
+  predict.val <- predict(model , newdata = df.test )
+  
+  mean.err.training <- mean((df.training$lcavol - fitted.values(model))^2)
+  mean.err.validation <- mean((df.test$lcavol - predict.val)^2)
+  
+  
+  return(c(mean.err.training , mean.err.validation))
+}
+
+err.train.val <- lapply(1:8 , FUN = err.training.val )
+names(err.train.val) <- names(RSS.min.v)
+err.train.val
+                   
+
+
+```
+
+
+
+
+
+```{r}
+# plot
+err.train <- sapply(1:8 , function(i) err.train.val[[i]][1])
+
+
+err.validation <- sapply(1:8 , function(i) err.train.val[[i]][2])
+
+
+plot(1:8 , err.validation , col= "blue" , pch=20 , 
+     main = "Erreur d'entrainment && Validation en fonction du taille K du Modéle " , 
+     xlab = "taille K du Modéle " , ylab = "Erreur en moyenne" , 
+     type = "b" , 
+     ylim = c(min(err.train , err.validation) , max(err.train , err.validation)))
+
+points(1:8 , err.train , col="red" , pch=20 , 
+     main = "Erreur d'entrainment en fonction du taille K du Modéle " , 
+     xlab = "taille K du Modéle " , ylab = "Erreur d'entrainment " , 
+     type = "b")
+
+
+legend("topright" , legend = c("Erreur de Validation" , "Erreur d'entrainment") ,
+       col = c("blue" , "red") , pch = 20)
+
+```
+### le choix de Modéle :
+
+On choisit le Modéle de taille 7 de RSS minimale car d'apres le graphe on voit que le modéle de taille 7 
+
+a le err.training et err.validation miniamle 
+
+
+```{r}
+summary(lm(lcavol ~ . , data = prostate.data[ , index(7)]))
+
+```
+
+
+
+## Question 23
+
+La principale limitation de la validation croisée (split-validation) est qu'elle réduit la quantité de données disponibles pour entraîner le modèle. Lorsque vous divisez les données en ensembles d'entraînement et de validation, vous disposez de moins de points de données pour l'entraînement, ce qui peut conduire à des modèles moins précis, surtout si le jeu de données est petit. Cela peut aboutir à des modèles qui ne généralisent pas bien sur de nouvelles données non vues.
+
+pour résoudre ce probleme : 
+
+ on peut envisager d'utiliser des techniques comme la validation croisée k-fold. Avec la validation croisée k-fold, le jeu de données est divisé en k sous-ensembles. Le modèle est ensuite entraîné k fois, chaque fois en utilisant k-1 sous-ensembles comme données d'entraînement et le sous-ensemble restant comme données de validation. Les performances du modèle sont ensuite moyennées sur les k essais pour obtenir une estimation plus robuste de la performance du modèle
+
+
+## Question 24
+
+

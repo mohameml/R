@@ -1,0 +1,363 @@
+---
+title: "TP1"
+author: "A REMPLIR ABSOLUMENT"
+output: 
+  html_document:
+    number_sections: false
+    toc_float: true
+---
+
+<!-- see help at https://bookdown.org/yihui/rmarkdown-cookbook/latex-output.html -->
+
+```{r setup, include=FALSE, message=FALSE}
+#see full list >knitr::opts_chunk$get()
+knitr::opts_chunk$set(echo = TRUE, fig.align="center", prompt = TRUE, comment="")
+```
+
+Lecture
+```{r}
+PISA2018 <- read.csv("PISA2018subset.csv", stringsAsFactors = TRUE)
+FR2018 <- subset(PISA2018, country == "FRA")
+head(FR2018)
+View(FR2018)
+```
+
+
+
+## Question 1
+
+```{r}
+summary(FR2018)
+```
+
+
+```{r}
+colnames(FR2018)
+# la relation conjointe entres les scores math , read , science :
+
+pairs(FR2018[,c("math" ,"read" , "science")])
+
+```
+
+
+```{r}
+summary(FR2018)
+
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr")
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+
+
+pairs(FR2018[,c("read", "math", "science", "escs")], diag.panel = panel.hist, upper.panel = panel.cor)
+
+```
+
+
+
+## Question 2
+
+Utiliser `cor`, `lm(math~read, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+# Is the score in math explained by the score in read?
+
+# on peut utiliser cor :
+cor(FR2018$read , FR2018$math)
+# régression linéaire :
+
+lm.math.read <- lm(math~read , data = FR2018)
+summary(lm.math.read)
+
+```
+
+comme le coefficient de détermination du modéle de regression `lm(math~read)` est égale à 70% donc le pourcentege explique par ce modéle est trés imporatnt donc on peut dire que le score de math peut étre explique par le score de read
+
+
+
+### Visulaistion du Modéle 
+
+```{r}
+plot(FR2018$read , FR2018$math , col="red" , pch=20 , 
+     main = "Régression linéaire math~read" , xlab="score de read" , ylab="score de math")
+
+points(FR2018$read , fitted.values(lm.math.read) , col="blue" , pch=20 )
+
+
+
+```
+
+
+
+
+
+## Question 3
+
+
+Utiliser `cor`, `lm(science~read, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+# est ce que on peut expliquer le score de science par le score de math :
+
+# on peut calculer le correlation entre science et read :
+cor(FR2018$science , FR2018$read)
+
+# Régression linéaire entre science et read :
+
+lm.science.read <- lm(science ~ read , data = FR2018)
+
+summary(lm.science.read)
+
+
+
+```
+
+Comme le coefficient de détermination du modéle de regression `lm(science~read)` est égale à 71% donc le pourcentege explique par ce modéle est trés imporatnt donc on peut dire que le score de science peut étre explique par le score de read.
+
+### Visulaistion du modéle 
+
+```{r}
+plot(FR2018$read , FR2018$science , col="red" , pch=20 ,
+     main="Régression linéaire science~read" , xlab="read score" , ylab="science score")
+points(FR2018$read , fitted.values(lm.science.read) , col="blue" , pch=20)
+legend("topleft", legend=c("val de Y_i" , "val de Y_i estimée") , col=c("red" , "blue") , pch=c(20 , 20))
+abline(lm.science.read)
+
+```
+
+## Question 4 : ?? 
+
+- pour expliquer la reélation entre le score math , scie,ce et read il faut effecuter un régression linéaire multiple et il ne suffit d'effecuer le régression entre le modéle de régression entre chacun de ces modéle 
+
+
+## Question 5
+
+Utiliser `cor`, `lm(math~escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+
+```{r}
+# We want to adjust the estimation against the socio-eonomic group escs of the family. Perform the
+# regression of math against escs. Display data and the regression line and discuss the part of the
+# explained variance
+
+lm.math.esc <- lm(math~escs , data = FR2018)
+summary(lm.math.esc)
+
+
+```
+
+
+```{r}
+plot(FR2018$escs , FR2018$math , col="red" , pch=20 , 
+     main = "Régression linéaire math~escs" , xlab="escs" , ylab="score de math")
+
+abline(lm.math.esc , col="blue")
+
+```
+
+
+la varinace expliquée par ce modéle est trés faible donc le modéle n'est pas pectinate. 
+
+## Question 6
+
+Utiliser `cor`, `lm(read~escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+#  Is the score in read linked to escs? Perform the regression of read against escs. Display the regression
+# line and discuss the part of the explained variance.
+
+# cor :
+cor(FR2018$read , FR2018$escs) # 0.44
+
+# Régression lineaire entre read et escs :
+lm.read.escs <- lm(read ~ escs , data = FR2018)
+summary(lm.read.escs)
+
+```
+la varinace expliquée par ce modéle est trés faible donc ce modéle n'est pertinente .
+
+
+### Visualistion du modéle 
+
+```{r}
+plot(FR2018$escs , FR2018$read , col="red" , pch=20 ,
+     main ="Régression linéaire read ~ escs " , xlab="escs" , ylab = "score read")
+abline(lm.read.escs , col="blue")
+
+
+```
+
+
+
+## Question 7
+
+Utiliser `cor`, `lm(math~read+escs, data=FR2018)`, `summary(lm())`, `abline(lm())`.
+
+```{r}
+lm.math <- lm(math~read+escs , data = FR2018)
+summary(lm.math)
+
+```
+
+### RQ :
+
+```{r}
+
+confint(lm.math , "escs" , level = 0.95 )
+
+```
+
+avce un niveau de coffiance de 95% on que 0 apparient à l'intervalle de coffiance de escs donc le choix de ce varibable dans le modéle de régression n'approte pas de gande information .
+
+
+## Question 8
+
+# Boxplot
+
+```{r}
+summary(FR2018$gender)
+
+
+```
+
+
+Utiliser `boxplot(math ~ gender, data = FR2018)`, `shapiro.test`, `t.test`
+
+```{r}
+math.score.fille <- FR2018$math[FR2018$gender == "female"]
+math.score.fille
+math.score.garcon <- FR2018$math[FR2018$gender == "male"]
+math.score.garcon
+
+
+```
+
+
+```{r}
+
+boxplot(math ~ gender  ,data = FR2018 )
+
+
+
+```
+
+### Interprétations :
+
+- On remarque que la ligne médiane est presque égale pour les notes de filles en mathématiques et les notes de garçons en mathématiques ont presque la même médiane.
+
+- On remarque que les notes de filles présentent des valeurs aberrantes.
+
+- La taille de la boîte des garçons est plus longue que celle des filles, ce qui explique une variabilité importante des notes de garçons.
+
+
+# t.test && shapiro.test :
+
+
+- shapiro.test :
+La fonction shapiro.test en R est utilisée pour effectuer un test de normalité de Shapiro-Wilk. Ce test évalue si un échantillon de données suit une distribution normale.
+
+```{r}
+shapiro.test(FR2018$math)
+
+```
+
+le p-value de ce test est 25% donc on ne peut pas réjeter l'hypothése de normalité de score de math donc on peut appliquer le test de stuent entre les scores de math pour les filles et le score math pour les garçons .
+
+
+
+
+- t.test : 
+La fonction `t.test` en R est utilisée pour effectuer un test t de Student afin de comparer les moyennes de deux groupes indépendants. Ce test est couramment utilisé pour déterminer si les moyennes de deux échantillons indépendants sont statistiquement différentes.
+
+
+```{r}
+t.test(math ~ gender , data =FR2018)
+
+```
+
+comme le p-value égale à 26% donc on ne peut pas réjetre l'hypothése H0 .
+
+
+## Question 9
+
+
+Utiliser `boxplot(science ~ gender, data = FR2018)`, `shapiro.test`, `t.test`
+
+```{r}
+# Same question for the score in read for FR2018
+
+# boxplot :
+boxplot(read ~ gender , data = FR2018)
+
+
+
+```
+
+```{r}
+shapiro.test(FR2018$read)
+
+
+mean(FR2018$read[FR2018$gender =="male"]) # 439.6356
+mean(FR2018$read[FR2018$gender =="female"]) # 507.3138
+
+
+```
+
+
+
+## Question 10
+
+Changer `FR2018` en `PISA2018`.
+
+```{r}
+
+
+
+country <- unique(PISA2018$country)
+mean.fille <- rep(0 , length(country))
+mean.gar <- rep(0 , length(country))
+i <- 1 
+
+for( e in country) {
+  mean.gar[i] <- mean(PISA2018$read[PISA2018$country == e & PISA2018$gender =="male"])
+  mean.fille[i] <- mean(PISA2018$read[PISA2018$country == e & PISA2018$gender=="female"])   
+  i <- i + 1 
+}
+
+df <- data.frame(
+  country= unique(PISA2018$country) , 
+  gar = mean.gar ,
+  fille = mean.fille
+)
+
+df$fille_sup_gar <- df$fille > df$gar
+View(df)
+
+
+summary(df$fille_sup_gar)
+```
+
+donc on remarque que en génerle les filles sont trés forte en lecteur (66 country ).
+
+
+
+
+
+
+
+
+
